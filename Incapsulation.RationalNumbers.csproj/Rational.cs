@@ -79,7 +79,7 @@ namespace Incapsulation.RationalNumbers
         public static implicit operator Rational(int number) => new Rational(number);
         public static implicit operator double(Rational number) => number.IsNan ? double.NaN: 
                                                   number.Numerator/(double)number.Denominator;
-        public static implicit operator int(Rational number) => number.IsInt ? number.Numerator
+        public static explicit operator int(Rational number) => number.IsInt ? number.Numerator
                                                                 : throw new ArgumentException() ;
     }
 }
