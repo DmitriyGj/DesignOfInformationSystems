@@ -1,0 +1,10 @@
+D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\bin\Debug\Incapsulation.RationalNumbers.exe.config
+D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\bin\Debug\Incapsulation.RationalNumbers.exe
+D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\bin\Debug\Incapsulation.RationalNumbers.pdb
+D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\bin\Debug\nunit.framework.dll
+D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\bin\Debug\nunitlite.dll
+D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.csprojAssemblyReference.cache
+D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.csproj.CoreCompileInputs.cache
+D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.csproj.CopyComplete
+D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.exe
+D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.pdb
