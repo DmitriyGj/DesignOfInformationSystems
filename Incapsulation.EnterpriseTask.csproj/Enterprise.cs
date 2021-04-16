@@ -20,13 +20,12 @@ namespace Incapsulation.EnterpriseTask
         }
         public string Inn
         {
-            get =>  Inn;
-
+            get => Inn;
             set
             {
-                if (Inn.Length != 10 || !Inn.All(z => char.IsDigit(z)))
+                if (value.Length != 10 || !value.All(z => char.IsDigit(z)))
                     throw new ArgumentException();
-                Inn = Inn;
+                Inn = value;
             }
         }
        public DateTime EstablishDate

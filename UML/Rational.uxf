@@ -1,0 +1,17 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>90</x><y>180</y><w>320</w><h>250</h></coordinates><panel_attributes>Rational
+--
+&lt;&lt;readonly&gt;&gt; + Numerator: int 
+&lt;&lt;readonly&gt;&gt; + Denominator: int 
+&lt;&lt;get&gt;&gt; + IsNan: bool
+&lt;&lt;get&gt;&gt; - IsInt: bool
+--
++ Rational(numerator: int, denominator: int): Rational
++ Rational(numerator: int): Rational
+- FindNOD(num: int, den:int): int
+&lt;&lt;operator&gt;&gt; + _+(a: Rational, b: Rational)
+&lt;&lt;operator&gt;&gt; + _-(a: Rational, b: Rational)
+&lt;&lt;operator&gt;&gt; + _*(a: Rational, b: Rational)
+&lt;&lt;operator&gt;&gt; + _/(a: Rational, b: Rational)
+&lt;&lt;operator implicit&gt;&gt; +_Rational(number: int): Rational
+&lt;&lt;operator implicit&gt;&gt; +_double(number: Rational): double
+&lt;&lt;operator explicit&gt;&gt; +_int(number: Rational): int</panel_attributes><additional_attributes></additional_attributes></element></diagram>

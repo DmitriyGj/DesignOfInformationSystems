@@ -45,6 +45,5 @@ namespace Incapsulation.Weights
             set=> grid[index + start] = index < 0 || index + start > Length ? 
                   throw new IndexOutOfRangeException() : value;
         }
-
     }
 }
