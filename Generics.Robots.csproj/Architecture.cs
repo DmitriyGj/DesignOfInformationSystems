@@ -32,33 +32,29 @@ namespace Generics.Robots
 
     public class Mover : IDevice<IMoveCommand>
     {
-        public string ExecuteCommand(IMoveCommand _command)
+        public string ExecuteCommand(IMoveCommand move_command)
         {
-            var command = _command ;
-            if (command == null)
-                throw new ArgumentException();
-            return $"MOV {command.Destination.X}, {command.Destination.Y}";
+           return $"MOV {move_command.Destination.X}, " +
+                  $"{move_command.Destination.Y}";
         }
     }
 
-    public class ShooterMover : IDevice<IMoveCommand>
+    public class ShooterMover : IDevice<IShooterMoveCommand>
     {
-        public string ExecuteCommand(IMoveCommand _command)
-        {
-            var command = _command as IShooterMoveCommand ;
-            if (command == null)
-                throw new ArgumentException();
-            var hide = command.ShouldHide ? "YES" : "NO";
-            return $"MOV {command.Destination.X}, {command.Destination.Y}, USE COVER {hide}";
+        public string ExecuteCommand(IShooterMoveCommand move_command)
+        { 
+            return $"MOV {move_command.Destination.X}," +
+            $" {move_command.Destination.Y}, USE COVER " +
+            $"{(move_command.ShouldHide ? "YES" : "NO")}";
         }
     }
 
-    public class Robot
+    public  class Robot<TCommand>
     {
-        IRobotAI<IMoveCommand> ai;
-        IDevice<IMoveCommand> device;
+        IRobotAI<TCommand> ai;
+        IDevice<TCommand> device;
 
-        public Robot(IRobotAI<IMoveCommand> ai, IDevice<IMoveCommand> executor)
+        public Robot(IRobotAI<TCommand> ai, IDevice<TCommand> executor)
         {
             this.ai = ai;
             this.device = executor;
@@ -74,7 +70,10 @@ namespace Generics.Robots
                 yield return device.ExecuteCommand(command);
             }
         }
+    }
 
-        public static Robot Create<TCommand>(IRobotAI<IMoveCommand> ai, IDevice<IMoveCommand> executor) => new Robot(ai, executor);
+    public static class Robot
+    {
+        public static Robot<TCom> Create<TCom>(IRobotAI<TCom> ai, IDevice<TCom> device) => new Robot<TCom>(ai, device);
     }
 }
