@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +8,7 @@ namespace Generics.Tables
 {
     public class Table<TRow, TColumn, TValue>
     {
-        static DataSet<TRow, TColumn, TValue> databinding;
+        private static DataSet<TRow, TColumn, TValue> databinding;
         public List<TRow> Rows { get => Open.Rows; }
         public List<TColumn> Columns { get => Open.Columns; }
 
@@ -22,32 +22,30 @@ namespace Generics.Tables
             if (!Rows.Contains(row))
                 Rows.Add(row);
         }
+
         public void AddColumn(TColumn column)
         {
             if (!Columns.Contains(column))
                 Columns.Add(column);
         }
 
-        Func<bool, DataSet<TRow, TColumn, TValue>> CreateBufferForOpen = (IsExisted) =>
+        Func<bool, DataSet<TRow, TColumn, TValue>> bufferWithExistedOpen = (isExisted) =>
         {
-            var buffer = new DataSet<TRow, TColumn, TValue>();
-            buffer.Rows = databinding.Rows;
-            buffer.Columns = databinding.Columns;
-            buffer.Values = databinding.Values;
-
-            buffer.IsExistedOpen = IsExisted;
+            var buffer =new DataSet<TRow,TColumn,TValue>();
+            buffer.CopyOf(databinding);
+            buffer.IsExistedOpen = isExisted;
             return buffer;
         };
 
-        public DataSet<TRow, TColumn, TValue> Open => CreateBufferForOpen(false);
-        public DataSet<TRow, TColumn, TValue> Existed => CreateBufferForOpen(true);
+        public DataSet<TRow, TColumn, TValue> Open => bufferWithExistedOpen(false);
+        public DataSet<TRow, TColumn, TValue> Existed => bufferWithExistedOpen(true);
     }
 
     public class DataSet<TRow, TColumn, TValue>
     {
-        public List<TRow> Rows { get;  set; }
-        public List<TColumn> Columns { get;  set; }
-        public Dictionary<Tuple<TRow, TColumn>, TValue> Values { get;  set; }
+        public List<TRow> Rows { get; private set; }
+        public List<TColumn> Columns { get; private set; }
+        public Dictionary<Tuple<TRow, TColumn>, TValue> Values { get; private set; }
         public bool IsExistedOpen;
 
         public DataSet()
@@ -56,35 +54,31 @@ namespace Generics.Tables
             Rows = new List<TRow>();
             Columns = new List<TColumn>();
         }
+
+        public DataSet<TRow,TColumn,TValue> CopyOf(DataSet<TRow,TColumn,TValue> data)
+        {
+            Rows = data.Rows;
+            Columns = data.Columns;
+            Values = data.Values;
+            return this;
+        }
+
         public TValue this[TRow row, TColumn column]
         {
             get
             {
-                var key = Tuple.Create(row,column);
-                if(IsExistedOpen)
-                {
-                    if (!Rows.Contains(row) || !Columns.Contains(column))
+                var key = Tuple.Create(row, column);
+                if ((!Rows.Contains(row) || !Columns.Contains(column)) && IsExistedOpen)
                         throw new ArgumentException();
-                    else
-                    {
-                        if (!Values.ContainsKey(key))
-                            Values[key] = default;
-                        return Values[key];
-                    }
-                }
-                else
-                {
-                    if (!Values.ContainsKey(key))
-                        return default;
-                    else
-                    {
-                        if (!Rows.Contains(row))
-                            Rows.Add(row);
-                        if (!Columns.Contains(column))
-                            Columns.Add(column);
-                    }
-                    return Values[key];
-                }
+                if (!Values.ContainsKey(key) && IsExistedOpen)
+                    Values[key] = default;
+                else if (!Values.ContainsKey(key))
+                    return default;
+                if (!Rows.Contains(row))
+                        Rows.Add(row);
+                if (!Columns.Contains(column))
+                        Columns.Add(column);
+                return Values[key];
             }
             set
             {
@@ -98,7 +92,7 @@ namespace Generics.Tables
                 }
                 else
                 {
-                    if (!Rows.Contains(row) )
+                    if (!Rows.Contains(row))
                         Rows.Add(row);
                     if (!Columns.Contains(column))
                         Columns.Add(column);
