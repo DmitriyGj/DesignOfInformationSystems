@@ -7,14 +7,21 @@ using System.Threading.Tasks;
 namespace Generics.Tables
 {
     public class Table<TRow, TColumn, TValue>
-    {
-        private static DataSet<TRow, TColumn, TValue> databinding;
-        public List<TRow> Rows { get => Open.Rows; }
-        public List<TColumn> Columns { get => Open.Columns; }
+    { 
+        public List<TRow> Rows { get; set; }
+        public List<TColumn> Columns { get; set; }
+
+        public Dictionary<Tuple<TRow, TColumn>, TValue> Values ;
+        private ExistedIndexer<TRow, TColumn, TValue> existed { get;  }
+        private NotExistedIndexer<TRow, TColumn, TValue> notexisted { get; }
 
         public Table()
         {
-            databinding = new DataSet<TRow, TColumn, TValue>();
+            Rows = new List<TRow>();
+            Columns = new List<TColumn>();
+            Values = new Dictionary<Tuple<TRow, TColumn>, TValue>(); 
+            existed= new ExistedIndexer<TRow, TColumn, TValue>(this);
+            notexisted = new NotExistedIndexer<TRow, TColumn, TValue>(this);
         }
 
         public void AddRow(TRow row)
@@ -29,38 +36,17 @@ namespace Generics.Tables
                 Columns.Add(column);
         }
 
-        Func<bool, DataSet<TRow, TColumn, TValue>> bufferWithExistedOpen = (isExisted) =>
-        {
-            var buffer =new DataSet<TRow,TColumn,TValue>();
-            buffer.CopyOf(databinding);
-            buffer.IsExistedOpen = isExisted;
-            return buffer;
-        };
+        public NotExistedIndexer<TRow, TColumn, TValue> Open => notexisted;
 
-        public DataSet<TRow, TColumn, TValue> Open => bufferWithExistedOpen(false);
-        public DataSet<TRow, TColumn, TValue> Existed => bufferWithExistedOpen(true);
+        public ExistedIndexer<TRow, TColumn, TValue> Existed =>existed;
     }
 
-    public class DataSet<TRow, TColumn, TValue>
+    public class NotExistedIndexer<TRow, TColumn, TValue> 
     {
-        public List<TRow> Rows { get; private set; }
-        public List<TColumn> Columns { get; private set; }
-        public Dictionary<Tuple<TRow, TColumn>, TValue> Values { get; private set; }
-        public bool IsExistedOpen;
-
-        public DataSet()
+        Table<TRow, TColumn, TValue> table;
+        public NotExistedIndexer(Table<TRow, TColumn, TValue> table)
         {
-            Values = new Dictionary<Tuple<TRow, TColumn>, TValue>();
-            Rows = new List<TRow>();
-            Columns = new List<TColumn>();
-        }
-
-        public DataSet<TRow,TColumn,TValue> CopyOf(DataSet<TRow,TColumn,TValue> data)
-        {
-            Rows = data.Rows;
-            Columns = data.Columns;
-            Values = data.Values;
-            return this;
+            this.table = table;
         }
 
         public TValue this[TRow row, TColumn column]
@@ -68,36 +54,53 @@ namespace Generics.Tables
             get
             {
                 var key = Tuple.Create(row, column);
-                if ((!Rows.Contains(row) || !Columns.Contains(column)) && IsExistedOpen)
-                        throw new ArgumentException();
-                if (!Values.ContainsKey(key) && IsExistedOpen)
-                    Values[key] = default;
-                else if (!Values.ContainsKey(key))
+                if ((!table.Rows.Contains(row) && !table.Columns.Contains(column)) || !table.Values.ContainsKey(key))
                     return default;
-                if (!Rows.Contains(row))
-                        Rows.Add(row);
-                if (!Columns.Contains(column))
-                        Columns.Add(column);
-                return Values[key];
+                if (!table.Rows.Contains(row))
+                    table.Rows.Add(row);
+                if (!table.Columns.Contains(column))
+                    table.Columns.Add(column);
+                return table.Values[key];
+            }
+
+            set
+            {
+                var key = Tuple.Create(row, column);
+                if (!table.Rows.Contains(row))
+                    table.Rows.Add(row);
+                if (!table.Columns.Contains(column))
+                    table.Columns.Add(column);
+                table.Values[key] = value;
+            }
+        }
+    }
+
+    public class ExistedIndexer<TRow,TColumn, TValue>
+    {
+        Table<TRow, TColumn, TValue> table;
+        public ExistedIndexer(Table<TRow, TColumn, TValue> table)
+        {
+            this.table = table;
+        }
+
+        public TValue this[TRow row, TColumn column]
+        {
+            get
+            {
+                var key = Tuple.Create(row, column);
+                if (!table.Rows.Contains(row) || !table.Columns.Contains(column))
+                    throw new ArgumentException();
+                else if (!table.Values.ContainsKey(key) )
+                    table.Values[key] = default;
+                return table.Values[key];
             }
             set
             {
                 var key = Tuple.Create(row, column);
-                if (IsExistedOpen)
-                {
-                    if (!Rows.Contains(row) || !Columns.Contains(column))
-                        throw new ArgumentException();
-                    else
-                        Values[key] = value;
-                }
+                if (!table.Rows.Contains(row) || !table.Columns.Contains(column))
+                    throw new ArgumentException();
                 else
-                {
-                    if (!Rows.Contains(row))
-                        Rows.Add(row);
-                    if (!Columns.Contains(column))
-                        Columns.Add(column);
-                    Values[key] = value;
-                }
+                    table.Values[key] = value;
             }
         }
     }
