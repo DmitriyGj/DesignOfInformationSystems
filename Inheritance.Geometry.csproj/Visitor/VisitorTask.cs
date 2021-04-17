@@ -83,15 +83,15 @@ namespace Inheritance.Geometry.Visitor
 
     public class BoundingBoxVisitor :IVisitor<RectangularCuboid>
     {
-        RectangularCuboid IVisitor<RectangularCuboid>.Visit(RectangularCuboid cuboid) => cuboid;
+        public RectangularCuboid Visit(RectangularCuboid cuboid) => cuboid;
 
-        RectangularCuboid IVisitor<RectangularCuboid>.Visit(Ball ball) =>
+        public RectangularCuboid Visit(Ball ball) =>
         new RectangularCuboid(ball.Position, 2 * ball.Radius, 2 * ball.Radius, 2 * ball.Radius);
 
-        RectangularCuboid IVisitor<RectangularCuboid>.Visit(Cylinder cylinder) =>
+        public RectangularCuboid Visit(Cylinder cylinder) =>
         new RectangularCuboid(cylinder.Position, 2 * cylinder.Radius, 2 * cylinder.Radius, cylinder.SizeZ);
 
-        RectangularCuboid IVisitor<RectangularCuboid>.Visit(CompoundBody body)
+        public RectangularCuboid Visit(CompoundBody body)
         {
             var parse = body.Parts.Select(s => s.Accept(this) as RectangularCuboid).ToList();
             var minVectors = parse.Select(s => new Vector3(s.Position.X - s.SizeX / 2, s.Position.Y - s.SizeY / 2, s.Position.Z - s.SizeZ / 2)).ToList();
@@ -108,13 +108,13 @@ namespace Inheritance.Geometry.Visitor
 
     public class BoxifyVisitor : IVisitor<Body>
     {
-        Body IVisitor<Body>.Visit(Ball ball) => ball.Accept(new BoundingBoxVisitor());
+        public Body Visit(Ball ball) => ball.Accept(new BoundingBoxVisitor());
 
-        Body IVisitor<Body>.Visit(RectangularCuboid cuboid) => cuboid.Accept(new BoundingBoxVisitor());
+        public Body Visit(RectangularCuboid cuboid) => cuboid.Accept(new BoundingBoxVisitor());
 
-        Body IVisitor<Body>.Visit(Cylinder cylinder) => cylinder.Accept(new BoundingBoxVisitor());
+        public Body Visit(Cylinder cylinder) => cylinder.Accept(new BoundingBoxVisitor());
 
-        Body IVisitor<Body>.Visit(CompoundBody body)
+        public Body Visit(CompoundBody body)
         {
             List<Body> transfer = body.Parts as List<Body>;
             for (int i = 0; i != transfer.Count; i++)
