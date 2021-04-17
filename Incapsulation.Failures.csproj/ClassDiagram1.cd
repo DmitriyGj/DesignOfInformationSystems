@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
+  <Class Name="Incapsulation.Failures.Device">
+    <Position X="1" Y="0.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReportMaker.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ID" />
+      <Property Name="Name" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Incapsulation.Failures.Failure">
+    <Position X="9.5" Y="0.75" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEgAAAAAAAAAAAAQAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>ReportMaker.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Date" />
+      <Property Name="Device" />
+      <Property Name="FailureType" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Incapsulation.Failures.ReportMaker">
+    <Position X="5.5" Y="3.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAABAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>ReportMaker.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Failure" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.String" Collapsed="true">
+    <Position X="0.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Orientation="Bottom" Position="0.1" />
+  </Class>
+  <Struct Name="System.Int32" Collapsed="true">
+    <Position X="2.5" Y="3" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Orientation="Bottom" Position="0.117" />
+  </Struct>
+  <Struct Name="System.DateTime" Collapsed="true">
+    <Position X="16" Y="1.25" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Struct>
+  <Enum Name="Incapsulation.Failures.FailureType">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEACAAAAEAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>ReportMaker.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -38,6 +38,7 @@ namespace Incapsulation.Failures
         public DateTime Date { get; private set; }
         public FailureType FailureType { get; private set; }
         public Device Device { get; private set; }
+
         public Failure(Device device, FailureType failure, DateTime failureDate)
         {
             this.Date = failureDate;
@@ -48,6 +49,14 @@ namespace Incapsulation.Failures
 
     public class ReportMaker
     {
+        public Failure Failure
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         public static List<string> FindDevicesFailedBeforeDateObsolete(
             int day,
             int month,
