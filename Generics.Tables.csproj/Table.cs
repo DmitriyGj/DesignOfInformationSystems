@@ -55,7 +55,7 @@ namespace Generics.Tables
             {
                 var key = Tuple.Create(row, column);
                 if ((!table.Rows.Contains(row) && !table.Columns.Contains(column)) || !table.Values.ContainsKey(key))
-                    return default;
+                    return table.Values[key] = default;
                 if (!table.Rows.Contains(row))
                     table.Rows.Add(row);
                 if (!table.Columns.Contains(column))
