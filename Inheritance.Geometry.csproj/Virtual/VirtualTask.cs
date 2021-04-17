@@ -67,21 +67,6 @@ namespace Inheritance.Geometry
             return point >= minPoint && point <= maxPoint;
         }
 
-        public Vector3 GetMinPoint()
-        {
-            return new Vector3(
-                 Position.X - SizeX / 2,
-                 Position.Y - SizeY / 2,
-                 Position.Z - SizeZ / 2);
-        }
-
-        public Vector3 GetMaxPoint()
-        {
-            return new Vector3(Position.X + SizeX / 2, 
-                               Position.Y + SizeY / 2, 
-                               Position.Z + SizeZ / 2);
-        }
-
         public override RectangularCuboid GetBoundingBox() => new RectangularCuboid(Position,SizeX,SizeY,SizeZ);
     }
 
@@ -124,43 +109,16 @@ namespace Inheritance.Geometry
         
         public override RectangularCuboid GetBoundingBox()
         {
-            var minVector = new Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
-            var maxVector = new Vector3(double.MinValue, double.MinValue, double.MinValue);
-            var minCoordinatesVector = new Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
-            var maxCoordinatesVector = new Vector3(double.MinValue, double.MinValue, double.MinValue);
-            foreach (var part in Parts)
-            {
-                var box = part.GetBoundingBox();
-                var minOfBox = box.GetMinPoint();
-                var maxOfBox = box.GetMaxPoint();
-                minVector = minOfBox <= minVector?minOfBox:minVector ;
-                maxVector = maxOfBox >= maxVector?maxOfBox:maxVector;
-                minCoordinatesVector = minCoordinatesVector.GetSmallestCoordinatesFrom(minOfBox);
-                maxCoordinatesVector = maxCoordinatesVector.GetBiggestCoordinatesFrom(maxOfBox);
-            }
-            return new RectangularCuboid(minVector.GetMiddleWith(maxVector)
-                , maxCoordinatesVector.X - minCoordinatesVector.X
-                , maxCoordinatesVector.Y - minCoordinatesVector.Y
-                , maxCoordinatesVector.Z - minCoordinatesVector.Z); ;
-        }
-   
-    }
-    static public class Vector3Extension
-    {
-        public static Vector3 GetMiddleWith(this Vector3 vector1, Vector3 vector2)
-        {
-            var transfer = vector1 + vector2;
-            return  new Vector3(transfer.X / 2, transfer.Y / 2, transfer.Z / 2);
-        }
-
-        public static Vector3 GetSmallestCoordinatesFrom(this Vector3 vector1,Vector3 vector2)
-        {
-            return new Vector3(Math.Min(vector1.X,vector2.X), Math.Min(vector1.Y,vector2.Y), Math.Min(vector1.Z,vector2.Z));
-        }
-
-        public static Vector3 GetBiggestCoordinatesFrom(this Vector3 vector1, Vector3 vector2)
-        {
-            return new Vector3(Math.Max(vector1.X, vector2.X), Math.Max(vector1.Y, vector2.Y), Math.Max(vector1.Z, vector2.Z));
+            var parse = Parts.Select(s => s.GetBoundingBox()).ToList();
+            var minVectors = parse.Select(s =>new Vector3(s.Position.X - s.SizeX / 2, s.Position.Y - s.SizeY / 2, s.Position.Z - s.SizeZ / 2)).ToList();
+            var maxVectors = parse.Select(s =>new Vector3(s.Position.X + s.SizeX / 2, s.Position.Y + s.SizeY / 2, s.Position.Z + s.SizeZ / 2)).ToList();
+            var minCoordinates = new Vector3(minVectors.Min(s => s.X), minVectors.Min(s => s.Y), minVectors.Min(s => s.Z));
+            var maxCoordinates = new Vector3(maxVectors.Max(s => s.X), maxVectors.Max(s => s.Y), maxVectors.Max(s => s.Z));
+            var position = maxCoordinates + minCoordinates;
+            return new RectangularCuboid(new Vector3(position.X / 2, position.Y / 2, position.Z / 2),
+                maxCoordinates.X - minCoordinates.X,
+                maxCoordinates.Y - minCoordinates.Y,
+                maxCoordinates.Z - minCoordinates.Z);
         }
     }
 }

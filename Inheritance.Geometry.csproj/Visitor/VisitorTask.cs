@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Inheritance.Geometry.Visitor
 {
-    public interface IVisitor
+    public interface IVisitor<out T>
     {
-        Body Visit(Ball ball);
-        Body Visit(RectangularCuboid cuboid);
-        Body Visit(Cylinder cylinder);
-        Body Visit(CompoundBody body);
+        T Visit(Ball ball);
+        T Visit(RectangularCuboid cuboid);
+        T Visit(Cylinder cylinder);
+        T Visit(CompoundBody body);
     }
 
     public abstract class Body
@@ -20,7 +21,7 @@ namespace Inheritance.Geometry.Visitor
             Position = position;
         }
 
-        public abstract Body Accept(IVisitor visitor);
+        public abstract Body Accept(IVisitor<Body> visitor);
     }
 
     public class Ball : Body
@@ -32,7 +33,7 @@ namespace Inheritance.Geometry.Visitor
             Radius = radius;
         }
 
-        public override Body Accept(IVisitor visitor) => visitor.Visit(this);
+        public override Body Accept(IVisitor<Body> visitor) => visitor.Visit(this);
     }
 
     public class RectangularCuboid : Body
@@ -48,22 +49,7 @@ namespace Inheritance.Geometry.Visitor
             SizeZ = sizeZ;
         }
 
-        public Vector3 GetMinPoint()
-        {
-            return new Vector3(
-                 Position.X - SizeX / 2,
-                 Position.Y - SizeY / 2,
-                 Position.Z - SizeZ / 2);
-        }
-
-        public Vector3 GetMaxPoint()
-        {
-            return new Vector3(Position.X + SizeX / 2,
-                               Position.Y + SizeY / 2,
-                               Position.Z + SizeZ / 2);
-        }
-
-        public override Body Accept(IVisitor visitor) => visitor.Visit(this);
+        public override Body Accept(IVisitor<Body> visitor) => visitor.Visit(this);
     }
 
     public class Cylinder : Body
@@ -78,7 +64,7 @@ namespace Inheritance.Geometry.Visitor
             Radius = radius;
         }
 
-        public override Body Accept(IVisitor visitor) => visitor.Visit(this);
+        public override Body Accept(IVisitor<Body> visitor) => visitor.Visit(this);
     }
 
     public class CompoundBody : Body
@@ -90,68 +76,45 @@ namespace Inheritance.Geometry.Visitor
             Parts = parts;
         }
 
-        public override Body Accept(IVisitor visitor) => visitor.Visit(this);
+        public override Body Accept(IVisitor<Body> visitor) => visitor.Visit(this);
     }
 
-    static public class Vector3Extension
+    
+
+    public class BoundingBoxVisitor :IVisitor<RectangularCuboid>
     {
-        public static Vector3 GetSmallestCoordinatesFrom(this Vector3 vector1, Vector3 vector2)
-        {
-            return new Vector3
-                (Math.Min(vector1.X, vector2.X),
-                 Math.Min(vector1.Y, vector2.Y),
-                 Math.Min(vector1.Z, vector2.Z));
-        }
+        RectangularCuboid IVisitor<RectangularCuboid>.Visit(RectangularCuboid cuboid) => cuboid;
 
-        public static Vector3 GetBiggestCoordinatesFrom(this Vector3 vector1, Vector3 vector2)
-        {
-            return new Vector3(
-                Math.Max(vector1.X, vector2.X),
-                Math.Max(vector1.Y, vector2.Y),
-                Math.Max(vector1.Z, vector2.Z));
-        }
-    }
-
-    public class BoundingBoxVisitor : IVisitor
-    {
-        Body IVisitor.Visit(RectangularCuboid cuboid) => cuboid;
-
-        Body IVisitor.Visit(Ball ball) =>
+        RectangularCuboid IVisitor<RectangularCuboid>.Visit(Ball ball) =>
         new RectangularCuboid(ball.Position, 2 * ball.Radius, 2 * ball.Radius, 2 * ball.Radius);
 
-        Body IVisitor.Visit(Cylinder cylinder) =>
+        RectangularCuboid IVisitor<RectangularCuboid>.Visit(Cylinder cylinder) =>
         new RectangularCuboid(cylinder.Position, 2 * cylinder.Radius, 2 * cylinder.Radius, cylinder.SizeZ);
 
-        Body IVisitor.Visit(CompoundBody body)
+        RectangularCuboid IVisitor<RectangularCuboid>.Visit(CompoundBody body)
         {
-            var minVector = new Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
-            var maxVector = new Vector3(double.MinValue, double.MinValue, double.MinValue);
-            foreach (var part in body.Parts)
-            {
-                var box = part.Accept(new BoundingBoxVisitor());
-                var minOfBox = (box as RectangularCuboid).GetMinPoint();
-                var maxOfBox = (box as RectangularCuboid).GetMaxPoint();
-                minVector = minVector.GetSmallestCoordinatesFrom(minOfBox);
-                maxVector = maxVector.GetBiggestCoordinatesFrom(maxOfBox);
-            }
-            var position = maxVector + minVector;
-            var length = maxVector - minVector;
-            return new RectangularCuboid(new Vector3(position.X / 2, position.Y / 2, position.Z / 2)
-                , length.X
-                , length.Y
-                , length.Z);
+            var parse = body.Parts.Select(s => s.Accept(this) as RectangularCuboid).ToList();
+            var minVectors = parse.Select(s => new Vector3(s.Position.X - s.SizeX / 2, s.Position.Y - s.SizeY / 2, s.Position.Z - s.SizeZ / 2)).ToList();
+            var maxVectors = parse.Select(s => new Vector3(s.Position.X + s.SizeX / 2, s.Position.Y + s.SizeY / 2, s.Position.Z + s.SizeZ / 2)).ToList();
+            var minCoordinates = new Vector3(minVectors.Min(s => s.X), minVectors.Min(s => s.Y), minVectors.Min(s => s.Z));
+            var maxCoordinates = new Vector3(maxVectors.Max(s => s.X), maxVectors.Max(s => s.Y), maxVectors.Max(s => s.Z));
+            var position = maxCoordinates + minCoordinates;
+            return new RectangularCuboid(new Vector3(position.X / 2, position.Y / 2, position.Z / 2),
+                maxCoordinates.X - minCoordinates.X,
+                maxCoordinates.Y - minCoordinates.Y,
+                maxCoordinates.Z - minCoordinates.Z);
         }
     }
 
-    public class BoxifyVisitor : IVisitor
+    public class BoxifyVisitor : IVisitor<Body>
     {
-        Body IVisitor.Visit(Ball ball) => ball.Accept(new BoundingBoxVisitor());
+        Body IVisitor<Body>.Visit(Ball ball) => ball.Accept(new BoundingBoxVisitor());
 
-        Body IVisitor.Visit(RectangularCuboid cuboid) => cuboid.Accept(new BoundingBoxVisitor());
+        Body IVisitor<Body>.Visit(RectangularCuboid cuboid) => cuboid.Accept(new BoundingBoxVisitor());
 
-        Body IVisitor.Visit(Cylinder cylinder) => cylinder.Accept(new BoundingBoxVisitor());
+        Body IVisitor<Body>.Visit(Cylinder cylinder) => cylinder.Accept(new BoundingBoxVisitor());
 
-        Body IVisitor.Visit(CompoundBody body)
+        Body IVisitor<Body>.Visit(CompoundBody body)
         {
             List<Body> transfer = body.Parts as List<Body>;
             for (int i = 0; i != transfer.Count; i++)
