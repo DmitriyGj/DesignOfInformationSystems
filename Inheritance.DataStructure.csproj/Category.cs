@@ -51,9 +51,9 @@ namespace Inheritance.DataStructure
 
         public override string ToString() => $"{productName}.{messageType}.{messageTopic}";
         public override bool Equals(object obj) =>obj is null?false: ReferenceEquals(obj,this) || obj.GetHashCode() == hashCode;
-        public static bool operator <(Category cat1, Category cat2) => cat1.CompareTo(cat2) < 0 ? true : false;
-        public static bool operator >(Category cat1, Category cat2) => cat1.CompareTo(cat2) > 0 ? true : false;
-        public static bool operator >=(Category cat1, Category cat2) => cat1.CompareTo(cat2) >= 0 ? true : false;
-        public static bool operator <=(Category cat1, Category cat2) => cat1.CompareTo(cat2) <= 0 ? true : false;
+        public static bool operator <(Category cat1, Category cat2) => cat1.CompareTo(cat2) < 0 ;
+        public static bool operator >(Category cat1, Category cat2) => cat1.CompareTo(cat2) > 0 ;
+        public static bool operator >=(Category cat1, Category cat2) => cat1.CompareTo(cat2) >= 0;
+        public static bool operator <=(Category cat1, Category cat2) => cat1.CompareTo(cat2) <= 0 ;
     }
 }
