@@ -1,0 +1,55 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLInterface</id><coordinates><x>580</x><y>600</y><w>200</w><h>150</h></coordinates><panel_attributes>&lt;&lt;out T&gt;&gt;
++ IVisitor
+--
+Visit(ball: Ball): T
+Visit(cuboid: RectangularCuboid): T
+Visit(cylinder: Cylinder): T
+Visit(body: CompoundBody): T</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>440</x><y>90</y><w>210</w><h>450</h></coordinates><panel_attributes>/AbstractClass/
+Body
+--
+&lt;&lt;get&gt;&gt; + Position: Vector3 
+--
+#Operation(i: int): int
+/+ Accept(visitor: IVisitor&lt;Body&gt;): Body/
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>760</x><y>90</y><w>320</w><h>80</h></coordinates><panel_attributes>Ball
+--
+&lt;&lt;get&gt;&gt; + Radius: double
+--
++ Ball(position: Vector3, radius: double): Ball
+&lt;&lt;override&gt;&gt; + Accept(visitor: IVisitor&lt;Body&gt;):Body
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>760</x><y>200</y><w>590</w><h>110</h></coordinates><panel_attributes>RectangularCuboid
+--
+&lt;&lt;get&gt;&gt; + SizeX: double
+&lt;&lt;get&gt;&gt; + SizeY: double
+&lt;&lt;get&gt;&gt; + SizeZ: double
+--
++ RectangularCuboid(position: Vector3, sizeX: double, sizeY: double, sizeZ: double):RectangularCuboid
+&lt;&lt;override&gt;&gt; + Accept(visitor: IVisitor&lt;Body&gt;):Body
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>760</x><y>320</y><w>380</w><h>100</h></coordinates><panel_attributes>Cylinder
+--
+&lt;&lt;get&gt;&gt; + Radius: double
+&lt;&lt;get&gt;&gt; + SizeZ: double
+--
++ Cylinder(position: Vector3, sizeZ: double, radius: double):Cylinder
+&lt;&lt;override&gt;&gt; + Accept(visitor: IVisitor&lt;Body&gt;):Body
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>760</x><y>450</y><w>320</w><h>100</h></coordinates><panel_attributes>CompoundBody
+--
+&lt;&lt;get&gt;&gt; +Parts: IReadOnlyList&lt;Body&gt;
+--
++ CompoundBody(parts: IReadOnlyList&lt;Body&gt;):Cylinder
+&lt;&lt;override&gt;&gt; + Accept(visitor: IVisitor&lt;Body&gt;):Body
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>830</x><y>750</y><w>310</w><h>110</h></coordinates><panel_attributes>+ BoundingBoxVisitor
+--
+
+--
+~Visit(cuboid: RectangularCuboid): RectangularCuboid
+~Visit(ball: Ball): RectangularCuboid
+~Visit(cylinder: Cylinder): RectangularCuboid
+~Visit(body: CompoundBody): RectangularCuboid</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>640</x><y>80</y><w>140</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>640</x><y>190</y><w>140</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>640</x><y>310</y><w>140</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>640</x><y>440</y><w>140</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>290</x><y>750</y><w>250</w><h>110</h></coordinates><panel_attributes>+ BoxifyVisitor
+--
+
+--
+~Visit(cuboid: RectangularCuboid): Body
+~Visit(ball: Ball): Body
+~Visit(cylinder: Cylinder): Body
+~Visit(body: CompoundBody): Body</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>530</x><y>610</y><w>160</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>140;10;10;10;10;140</additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>610</y><w>170</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;150;10;150;140</additional_attributes></element><element><id>Relation</id><coordinates><x>640</x><y>500</y><w>60</w><h>130</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>40;110;40;10;10;10</additional_attributes></element></diagram>

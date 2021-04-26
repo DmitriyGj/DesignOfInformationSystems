@@ -1,0 +1,25 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLInterface</id><coordinates><x>370</x><y>200</y><w>140</w><h>90</h></coordinates><panel_attributes>+IFightable
+--
+&lt;&lt;get,set&gt;&gt; Army:Army</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLInterface</id><coordinates><x>630</x><y>200</y><w>180</w><h>90</h></coordinates><panel_attributes>+ICollectable
+--
+&lt;&lt;get,set&gt;&gt; Treasure Treasure</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLInterface</id><coordinates><x>880</x><y>200</y><w>120</w><h>90</h></coordinates><panel_attributes>+IHaveOwner
+--
+&lt;&lt;get,set&gt;&gt; Owner:int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>860</x><y>360</y><w>210</w><h>50</h></coordinates><panel_attributes>ResourcePile
+--
+&lt;&lt;get,set&gt;&gt; +Treasure: Treasure</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>640</x><y>360</y><w>210</w><h>80</h></coordinates><panel_attributes>Mine
+--
+&lt;&lt;get,set&gt;&gt; +Owner: int
+&lt;&lt;get,set&gt;&gt; +Army:Army
+&lt;&lt;get,set&gt;&gt; +Treasure:Treasure</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>390</x><y>360</y><w>210</w><h>60</h></coordinates><panel_attributes>Creeps
+--
+&lt;&lt;get,set&gt;&gt; +Army:Army
+&lt;&lt;get,set&gt;&gt; +Treasure:Treasure</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>160</x><y>360</y><w>210</w><h>40</h></coordinates><panel_attributes>Wolves
+--
+&lt;&lt;get,set&gt;&gt; +Army: Army</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1090</x><y>370</y><w>210</w><h>50</h></coordinates><panel_attributes>Dwelling
+--
+&lt;&lt;get,set&gt;&gt; +Owner: int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>530</x><y>100</y><w>280</w><h>70</h></coordinates><panel_attributes>_Interaction_
+--
+
+--
+_+ Make(player:Player,mapObject:object):void_</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>259</x><y>210</y><w>190</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;10;10;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>819</x><y>210</y><w>130</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>110;10;10;40;20;150</additional_attributes></element><element><id>Relation</id><coordinates><x>719</x><y>210</y><w>140</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;110;40;120;150</additional_attributes></element><element><id>Relation</id><coordinates><x>939</x><y>210</y><w>210</w><h>180</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;190;10;190;160</additional_attributes></element><element><id>Relation</id><coordinates><x>939</x><y>220</y><w>130</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;110;30;110;140</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>110</y><w>120</w><h>120</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;100;40;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>710</x><y>160</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>810</x><y>120</y><w>160</w><h>110</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>130;90;140;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>569</x><y>200</y><w>160</w><h>180</h></coordinates><panel_attributes>lt=&lt;&lt;.
+group=1</panel_attributes><additional_attributes>140;20;10;10;10;160</additional_attributes></element><element><id>Relation</id><coordinates><x>439</x><y>210</y><w>230</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;200;80;210;150</additional_attributes></element><element><id>Relation</id><coordinates><x>439</x><y>200</y><w>160</w><h>190</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;20;140;10;140;170</additional_attributes></element></diagram>
