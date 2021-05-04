@@ -12,13 +12,21 @@ namespace Incapsulation.Weights
 {
     public class Indexer
     {
+        double[] pregrid;
         int length;
         int startIndex;
-        double[] preGrid;
+           
+        public Indexer(double[] main, int start, int length)
+        {
+            Length = length;
+            this.start = start;
+            grid = main;
+        }
+
         double[] grid
         {
-            get => preGrid;
-            set => preGrid = length + startIndex > value.Length ? throw new ArgumentException() : value;
+            get => pregrid;
+            set => pregrid = length + startIndex > value.Length || value is null ? throw new ArgumentException() : value;
         }
 
         public int Length
@@ -26,24 +34,17 @@ namespace Incapsulation.Weights
             get => length;
             private set => length = value < 0 ? throw new ArgumentException() : value;
         }
+
         private int start
         {
             get => startIndex;
             set => startIndex = value < 0 ? throw new ArgumentException() : value;
         }
 
-        public Indexer(double[] neiro, int start, int length)
-        {
-            Length = length;
-            this.start = start;
-            grid = neiro;
-        }
-
         public double this[int index]
         {
-            get=> index< 0 || start + index> Length ? throw new IndexOutOfRangeException() : grid[index + start];
-            set=> grid[index + start] = index < 0 || index + start > Length ? 
-                  throw new IndexOutOfRangeException() : value;
+            get => index < 0 || startIndex + index > length ? throw new IndexOutOfRangeException(): grid[index+start];
+            set => grid[index + start] = index < 0 || startIndex + index > length ? throw new IndexOutOfRangeException(): value;
         }
     }
 }
