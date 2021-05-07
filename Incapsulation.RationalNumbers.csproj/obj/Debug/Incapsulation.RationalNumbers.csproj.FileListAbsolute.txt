@@ -8,3 +8,13 @@ D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\obj\Debug\Incap
 D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.csproj.CopyComplete
 D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.exe
 D:\прога\ulearn\пис\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.pdb
+D:\Учеба\DesignOfInformationSystems\Incapsulation.RationalNumbers.csproj\bin\Debug\Incapsulation.RationalNumbers.exe.config
+D:\Учеба\DesignOfInformationSystems\Incapsulation.RationalNumbers.csproj\bin\Debug\Incapsulation.RationalNumbers.exe
+D:\Учеба\DesignOfInformationSystems\Incapsulation.RationalNumbers.csproj\bin\Debug\Incapsulation.RationalNumbers.pdb
+D:\Учеба\DesignOfInformationSystems\Incapsulation.RationalNumbers.csproj\bin\Debug\nunit.framework.dll
+D:\Учеба\DesignOfInformationSystems\Incapsulation.RationalNumbers.csproj\bin\Debug\nunitlite.dll
+D:\Учеба\DesignOfInformationSystems\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.csprojAssemblyReference.cache
+D:\Учеба\DesignOfInformationSystems\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.csproj.CoreCompileInputs.cache
+D:\Учеба\DesignOfInformationSystems\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.csproj.CopyComplete
+D:\Учеба\DesignOfInformationSystems\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.exe
+D:\Учеба\DesignOfInformationSystems\Incapsulation.RationalNumbers.csproj\obj\Debug\Incapsulation.RationalNumbers.pdb
