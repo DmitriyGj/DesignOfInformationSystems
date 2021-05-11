@@ -1,0 +1,10 @@
+D:\Учеба\DesignOfInformationSystems\Delegates.TreeTraversal.csproj\bin\Debug\Delegates.TreeTraversal.exe.config
+D:\Учеба\DesignOfInformationSystems\Delegates.TreeTraversal.csproj\bin\Debug\Delegates.TreeTraversal.exe
+D:\Учеба\DesignOfInformationSystems\Delegates.TreeTraversal.csproj\bin\Debug\Delegates.TreeTraversal.pdb
+D:\Учеба\DesignOfInformationSystems\Delegates.TreeTraversal.csproj\bin\Debug\nunit.framework.dll
+D:\Учеба\DesignOfInformationSystems\Delegates.TreeTraversal.csproj\bin\Debug\nunitlite.dll
+D:\Учеба\DesignOfInformationSystems\Delegates.TreeTraversal.csproj\obj\Debug\Delegates.TreeTraversal.csprojAssemblyReference.cache
+D:\Учеба\DesignOfInformationSystems\Delegates.TreeTraversal.csproj\obj\Debug\Delegates.TreeTraversal.csproj.CoreCompileInputs.cache
+D:\Учеба\DesignOfInformationSystems\Delegates.TreeTraversal.csproj\obj\Debug\Delegates.TreeTraversal.csproj.CopyComplete
+D:\Учеба\DesignOfInformationSystems\Delegates.TreeTraversal.csproj\obj\Debug\Delegates.TreeTraversal.exe
+D:\Учеба\DesignOfInformationSystems\Delegates.TreeTraversal.csproj\obj\Debug\Delegates.TreeTraversal.pdb

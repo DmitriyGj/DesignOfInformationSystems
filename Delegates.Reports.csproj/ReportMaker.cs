@@ -6,30 +6,16 @@ using System.Threading.Tasks;
 
 namespace Delegates.Reports
 {
-	public static class ReportMaker
-	{
-		public static string MakeReport(Format style, Processor info,IEnumerable<Measurement> measurements)
-		{
-			var data = measurements.ToList();
-			var result = new StringBuilder();
-			result.Append(style.MakeCaption(info.Caption));
-			result.Append(style.BeginList);
-			result.Append(style.MakeItem("Temperature", info.MakeStatistics(data.Select(z => z.Temperature)).ToString()));
-			result.Append(style.MakeItem("Humidity", info.MakeStatistics(data.Select(z => z.Humidity)).ToString()));
-			result.Append(style.EndList);
-			return result.ToString();
-		}
-	}
-
 	public class Format
     {
-		public string EndList, BeginList;
+		public Func<string> EndList;
+		public Func<string> BeginList;
 		public Func<string, string> MakeCaption;
 		public Func<string, string, string> MakeItem;
-		public Format(string beginList, string endList, Func<string,string> captMaker, Func<string,string,string> itemMaker)
+		public Format(Func<string> beginList, Func<string> endList, Func<string,string> captMaker, Func<string,string,string> itemMaker)
         {
 			EndList = endList;
-			BeginList = beginList;
+			BeginList =beginList;
 			MakeCaption = captMaker;
 			MakeItem = itemMaker;
         }
@@ -38,7 +24,7 @@ namespace Delegates.Reports
 	public class Processor
     {
 		public string Caption;
-		public Func<IEnumerable<double>,object> MakeStatistics;
+		public Func<IEnumerable<double>, object> MakeStatistics;
 		public Processor(string caption, Func<IEnumerable<double>,object> statMaker)
         {
 			Caption = caption;
@@ -48,41 +34,57 @@ namespace Delegates.Reports
 
 	public static class ReportMakerHelper
 	{
-		static readonly Format HTML = new Format("<ul>", "</ul>",
-						     (caption) => $"<h1>{caption}</h1>",
-							(valueType, entry) => $"<li><b>{valueType}</b>: {entry}");
-		static readonly Format MarkDown = new Format("", "",
-							    (caption) => $"## {caption}\n\n",
-								(valueType, entry) => $" * **{valueType}**: {entry}\n\n");
-
-		static readonly Processor Median = new Processor("Median", (data) =>
-		{
-			var list = data.OrderBy(z => z).ToList();
-			if (list.Count % 2 == 0)
-				return (list[list.Count / 2] + list[list.Count / 2 - 1]) / 2;
-
-			return list[list.Count / 2];
-		});
-
-		static readonly Processor MeanAndStd = new Processor("Mean and Std", (data) =>
-		{
-			var parseddata = data.ToList();
-			var mean = parseddata.Average();
-			var std = Math.Sqrt(data.Select(z => Math.Pow(z - mean, 2)).Sum() / (parseddata.Count - 1));
-
-			return new MeanAndStd
-			{
-				Mean = mean,
-				Std = std
-			};
-		});
-		public static string MeanAndStdHtmlReport(IEnumerable<Measurement> data) 
-							 => ReportMaker.MakeReport(HTML, MeanAndStd, data);
-		public static string MedianMarkdownReport(IEnumerable<Measurement> data) 
-							 => ReportMaker.MakeReport(MarkDown, Median, data);
-		public static string MeanAndStdMarkdownReport(IEnumerable<Measurement> data) 
-							 => ReportMaker.MakeReport(MarkDown, MeanAndStd, data);
-		public static string MedianHtmlReport(IEnumerable<Measurement> data) 
-							 => ReportMaker.MakeReport(HTML, Median, data);
+		public static string MakeReport(Format format, Processor processor, IEnumerable<Measurement> data)
+		 => $"{format.MakeCaption(processor.Caption)}" +
+			$"{format.BeginList()}" +
+			$"{format.MakeItem("Temperature", processor.MakeStatistics(data.ToList().Select(z => z.Temperature)).ToString())}" +
+			$"{format.MakeItem("Humidity", processor.MakeStatistics(data.ToList().Select(z => z.Humidity)).ToString())}"+
+		    $"{format.EndList()}";
+		
+		public static string MeanAndStdHtmlReport(IEnumerable<Measurement> data)
+		=> MakeReport(new Format(()=>"<ul>", ()=>"</ul>" , (caption) => $"<h1>{caption}</h1>", (valueType, entry) => $"<li><b>{valueType}</b>: {entry}"),
+					  new Processor("Mean and Std", (info) =>{
+								    var parseddata = info.ToList();
+									var mean = parseddata.Average();
+									var std = Math.Sqrt(info.Select(z => Math.Pow(z - mean, 2)).Sum() / (parseddata.Count - 1));
+									return new MeanAndStd
+									{
+										Mean = mean,
+										Std = std
+									};
+								}), data);
+		/*ReportMaker.MakeReport(HTML, MeanAndStd, data);*/
+		public static string MedianMarkdownReport(IEnumerable<Measurement> data)
+	     => MakeReport(new Format(()=>"", () => "",(caption) => $"## {caption}\n\n",(valueType, entry) => $" * **{valueType}**: {entry}\n\n"),
+								new Processor("Median", (info) => {
+									var list = info.OrderBy(z => z).ToList();
+									if (list.Count % 2 == 0)
+										return (list[list.Count / 2] + list[list.Count / 2 - 1]) / 2;
+									return list[list.Count / 2].ToString();
+								}), data);
+		/*ReportMaker.MakeReport(MarkDown, Median, data);*/
+		public static string MeanAndStdMarkdownReport(IEnumerable<Measurement> data)
+		=> MakeReport(new Format(() => "", () => "", (caption) => $"## {caption}\n\n", (valueType, entry) => $" * **{valueType}**: {entry}\n\n"),
+								new Processor("Mean and Std", (info) =>
+								{
+									var parseddata = info.ToList();
+									var mean = parseddata.Average();
+									var std = Math.Sqrt(info.Select(z => Math.Pow(z - mean, 2)).Sum() / (parseddata.Count - 1));
+									return new MeanAndStd
+									{
+										Mean = mean,
+										Std = std
+									};
+								}), data);
+		/*ReportMaker.MakeReport(MarkDown, MeanAndStd, data);*/
+		public static string MedianHtmlReport(IEnumerable<Measurement> data)
+		=> MakeReport(new Format(()=>"<ul>", () => "</ul>", (caption) => $"<h1>{caption}</h1>", (valueType, entry) => $"<li><b>{valueType}</b>: {entry}"),
+								new Processor("Median", (info) => {
+									var list = info.OrderBy(z => z).ToList();
+									if (list.Count % 2 == 0)
+										return (list[list.Count / 2] + list[list.Count / 2 - 1]) / 2;
+									return list[list.Count / 2].ToString();
+								}), data);
+		/*ReportMaker.MakeReport(HTML, Median, data);*/
 	}
 }
