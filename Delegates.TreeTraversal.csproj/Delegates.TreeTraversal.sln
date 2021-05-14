@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
+<<<<<<< HEAD
 VisualStudioVersion = 16.0.30128.74
+=======
+VisualStudioVersion = 16.0.31205.134
+>>>>>>> 648966bea90d11772e2a96eeb6b4f702c2667a03
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delegates.TreeTraversal", "Delegates.TreeTraversal.csproj", "{53FCBECC-7994-4B42-84C6-18D268D9D6C2}"
 EndProject
@@ -20,6 +24,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+<<<<<<< HEAD
 		SolutionGuid = {4659CF9A-8A35-418F-8F04-24DEE30E76BF}
+=======
+		SolutionGuid = {EAF594AC-58A7-487E-BA9C-5E7BB740B37B}
+>>>>>>> 648966bea90d11772e2a96eeb6b4f702c2667a03
 	EndGlobalSection
 EndGlobal

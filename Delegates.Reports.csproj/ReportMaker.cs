@@ -7,30 +7,45 @@ using System.Threading.Tasks;
 namespace Delegates.Reports
 {
 	public class Format
+<<<<<<< HEAD
     {
+=======
+	{
+>>>>>>> 648966bea90d11772e2a96eeb6b4f702c2667a03
 		public Func<string> EndList;
 		public Func<string> BeginList;
 		public Func<string, string> MakeCaption;
 		public Func<string, string, string> MakeItem;
+<<<<<<< HEAD
 		public Format(Func<string> beginList, Func<string> endList, Func<string,string> captMaker, Func<string,string,string> itemMaker)
         {
+=======
+		public Format
+			(Func<string> beginList, Func<string> endList, Func<string, string> captMaker, Func<string, string, string> itemMaker)
+		{
+>>>>>>> 648966bea90d11772e2a96eeb6b4f702c2667a03
 			EndList = endList;
 			BeginList =beginList;
 			MakeCaption = captMaker;
 			MakeItem = itemMaker;
-        }
-    }
+		}
+	}
 
 	public class Processor
-    {
+	{
 		public string Caption;
 		public Func<IEnumerable<double>, object> MakeStatistics;
+<<<<<<< HEAD
 		public Processor(string caption, Func<IEnumerable<double>,object> statMaker)
         {
+=======
+		public Processor(string caption, Func<IEnumerable<double>, object> statMaker)
+		{
+>>>>>>> 648966bea90d11772e2a96eeb6b4f702c2667a03
 			Caption = caption;
 			MakeStatistics = statMaker;
-        }
-    }
+		}
+	}
 
 	public static class ReportMakerHelper
 	{
@@ -38,6 +53,7 @@ namespace Delegates.Reports
 		 => $"{format.MakeCaption(processor.Caption)}" +
 			$"{format.BeginList()}" +
 			$"{format.MakeItem("Temperature", processor.MakeStatistics(data.ToList().Select(z => z.Temperature)).ToString())}" +
+<<<<<<< HEAD
 			$"{format.MakeItem("Humidity", processor.MakeStatistics(data.ToList().Select(z => z.Humidity)).ToString())}"+
 		    $"{format.EndList()}";
 		
@@ -56,6 +72,26 @@ namespace Delegates.Reports
 		/*ReportMaker.MakeReport(HTML, MeanAndStd, data);*/
 		public static string MedianMarkdownReport(IEnumerable<Measurement> data)
 	     => MakeReport(new Format(()=>"", () => "",(caption) => $"## {caption}\n\n",(valueType, entry) => $" * **{valueType}**: {entry}\n\n"),
+=======
+			$"{format.MakeItem("Humidity", processor.MakeStatistics(data.ToList().Select(z => z.Humidity)).ToString())}" +
+			$"{format.EndList()}";
+
+		public static string MeanAndStdHtmlReport(IEnumerable<Measurement> data)
+		=> MakeReport(new Format(() => "<ul>", () => "</ul>", (caption) => $"<h1>{caption}</h1>", (valueType, entry) => $"<li><b>{valueType}</b>: {entry}"),
+					  new Processor("Mean and Std", (info) => {
+						  var parseddata = info.ToList();
+						  var mean = parseddata.Average();
+						  var std = Math.Sqrt(info.Select(z => Math.Pow(z - mean, 2)).Sum() / (parseddata.Count - 1));
+						  return new MeanAndStd
+						  {
+							  Mean = mean,
+							  Std = std
+						  };
+					  }), data);
+		/*ReportMaker.MakeReport(HTML, MeanAndStd, data);*/
+		public static string MedianMarkdownReport(IEnumerable<Measurement> data)
+		 => MakeReport(new Format(() => "", () => "", (caption) => $"## {caption}\n\n", (valueType, entry) => $" * **{valueType}**: {entry}\n\n"),
+>>>>>>> 648966bea90d11772e2a96eeb6b4f702c2667a03
 								new Processor("Median", (info) => {
 									var list = info.OrderBy(z => z).ToList();
 									if (list.Count % 2 == 0)
@@ -78,7 +114,11 @@ namespace Delegates.Reports
 								}), data);
 		/*ReportMaker.MakeReport(MarkDown, MeanAndStd, data);*/
 		public static string MedianHtmlReport(IEnumerable<Measurement> data)
+<<<<<<< HEAD
 		=> MakeReport(new Format(()=>"<ul>", () => "</ul>", (caption) => $"<h1>{caption}</h1>", (valueType, entry) => $"<li><b>{valueType}</b>: {entry}"),
+=======
+		=> MakeReport(new Format(() => "<ul>", () => "</ul>", (caption) => $"<h1>{caption}</h1>", (valueType, entry) => $"<li><b>{valueType}</b>: {entry}"),
+>>>>>>> 648966bea90d11772e2a96eeb6b4f702c2667a03
 								new Processor("Median", (info) => {
 									var list = info.OrderBy(z => z).ToList();
 									if (list.Count % 2 == 0)

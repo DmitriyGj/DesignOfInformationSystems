@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace Delegates.Observers
 {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 648966bea90d11772e2a96eeb6b4f702c2667a03
 	public class StackOperationsLogger
 	{
 		private readonly Observer observer = new Observer();
@@ -38,6 +41,10 @@ namespace Delegates.Observers
 	{
 		public event Notifications Notify;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 648966bea90d11772e2a96eeb6b4f702c2667a03
 		List<T> data = new List<T>();
 
 		public void Push(T obj)
@@ -51,6 +58,7 @@ namespace Delegates.Observers
 			if (data.Count == 0)
 				throw new InvalidOperationException();
 			var result = data[data.Count - 1];
+<<<<<<< HEAD
 			Notify?.Invoke(new StackEventData<T> { IsPushed = false, Value = data[data.Count - 1] });
 			return result;
 
@@ -58,4 +66,10 @@ namespace Delegates.Observers
 	}
 
 
+=======
+			Notify?.Invoke(new StackEventData<T> { IsPushed = false, Value = result });
+			return result;
+		}
+	}
+>>>>>>> 648966bea90d11772e2a96eeb6b4f702c2667a03
 }
