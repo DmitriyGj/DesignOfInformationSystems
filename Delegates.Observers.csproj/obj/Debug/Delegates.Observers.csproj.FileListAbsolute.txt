@@ -1,0 +1,2 @@
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Observers.csproj\obj\Debug\Delegates.Observers.csprojAssemblyReference.cache
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Observers.csproj\obj\Debug\Delegates.Observers.csproj.CoreCompileInputs.cache
