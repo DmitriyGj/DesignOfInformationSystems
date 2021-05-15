@@ -1,0 +1,49 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><help_text>=.&gt;
+&lt;&lt;extends&gt;&gt;</help_text><element><id>UMLClass</id><coordinates><x>20</x><y>197</y><w>200</w><h>80</h></coordinates><panel_attributes>ShooterAI
+--
++counter: int
+--
++GetCommand():ShooterCommand
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>280</x><y>197</y><w>210</w><h>70</h></coordinates><panel_attributes>BuilderAI
+--
++counter: int
+--
++GetCommand():BuilderCommand
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>550</x><y>197</y><w>340</w><h>70</h></coordinates><panel_attributes>Mover
+--
+
+--
++ExecuteCommand(move_command:IMoveCommand):string
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>350</x><y>747</y><w>460</w><h>70</h></coordinates><panel_attributes>_Robot_
+--
+
+--
+_+Create&lt;TCom&gt;(ai:IRobotAI&lt;TCom&gt;, device:IDevice&lt;TCom&gt;):Robot&lt;TCom&gt;_
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>220</x><y>367</y><w>210</w><h>80</h></coordinates><panel_attributes>template=out T
+&lt;&lt;interface&gt;&gt; IRobotAI
+--
+
+--
+GetCommand():T
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>760</x><y>377</y><w>240</w><h>80</h></coordinates><panel_attributes>template=in T
+&lt;&lt;interface&gt;&gt; IDevice
+--
+
+--
+ExecuteCommand(com:T):string
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>140</x><y>267</y><w>180</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>160;110;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>257</y><w>120</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;120;100;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>960</x><y>197</y><w>380</w><h>70</h></coordinates><panel_attributes>ShooterMover
+--
+
+--
++ExecuteCommand(move_command:IShooterMoveCommand):string
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>257</y><w>190</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;130;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>440</x><y>517</y><w>520</w><h>180</h></coordinates><panel_attributes>template=TCommand
+Robot
+--
+-ai: IRobotAI&lt;TCommand&gt;
+-device: IDevice&lt;TCommand&gt;
+--
++Robot(ai:IRobotAI&lt;TCommand&gt;,executor:IDevice&lt;TCommand&gt;):Robot&lt;TCommand&gt;
++Start(steps:int):IEnumerable&lt;string&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>687</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>400</x><y>397</y><w>230</w><h>150</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;210;130</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>257</y><w>240</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;130;220;10</additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>407</y><w>180</w><h>140</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>160;10;10;120</additional_attributes></element></diagram>

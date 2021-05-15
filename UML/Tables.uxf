@@ -31,7 +31,5 @@ table: Table&lt;TRow, TColumn, TValue&gt;
 &lt;&lt;indexer&gt;&gt; +get(row:TRow, column:TColumn): TValue
 &lt;&lt;indexer&gt;&gt; +set(row:TRow, column:TColumn, value: TValue): void
  
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>330</x><y>140</y><w>220</w><h>320</h></coordinates><panel_attributes>lt=&lt;.&gt;
-</panel_attributes><additional_attributes>10;300;10;10;200;10</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>140</y><w>190</w><h>330</h></coordinates><panel_attributes>lt=&lt;.&gt;
-
-</panel_attributes><additional_attributes>170;310;170;10;10;10</additional_attributes></element></diagram>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>330</x><y>140</y><w>220</w><h>320</h></coordinates><panel_attributes>lt=-
+</panel_attributes><additional_attributes>10;300;10;10;200;10</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>290</y><w>170</w><h>180</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;10;150;10;150;160</additional_attributes></element></diagram>
