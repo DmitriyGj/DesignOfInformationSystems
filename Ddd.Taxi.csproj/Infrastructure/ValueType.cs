@@ -2,42 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Ddd.Taxi.Domain;
+using NUnit;
 
 namespace Ddd.Infrastructure
 {
-	/// <summary>
-	/// Базовый класс для всех Value типов.
-	/// </summary>
-	public class ValueType<T>
-	{
-		public override bool Equals(object obj)
-        {
-			if (obj is null ||!obj.GetType().Equals( typeof(T)))
-				return false;
-			var objT = obj.GetType();
-			var type = typeof(T);
+    public class ValueType<T>
+    {
 
-			if (object.ReferenceEquals(obj, this))
-				return true;
-			return type.GetProperties().All(prop => prop.GetValue(this).Equals(prop.GetValue(obj)));
+        static IEnumerable<PropertyInfo> properties;
+        static ValueType() => properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                              .OrderBy(prop => prop.Name);
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null || obj.GetType() != typeof(T))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            return properties.All(prop => Equals(prop.GetValue(this), (prop.GetValue(obj))));
         }
-			
+
+        public bool Equals(PersonName name) => Equals((object)name);
 
         public override int GetHashCode()
         {
-			int basePrimal = unchecked(0);
-			foreach (var prop in typeof(T).GetFields())
-			unchecked
-			{
-				basePrimal += prop.GetValue(this).GetHashCode();
-			};
-			return basePrimal;
+            var res = unchecked((int)2166136261);
+            var prime = 16777619;
+            unchecked
+            {
+                foreach(var prop in properties)
+                    res=(res ^ prop.GetValue(this).GetHashCode())*prime;
+            }
+            return res;
         }
 
-        public override string ToString()
-        {
-			var fields = typeof(T).GetProperties();
-			return $"{typeof(T).Name}({string.Join("; ", fields.Select(s => $"{s.Name}: {s.GetValue(this,null)}"))})";
-		}
+        public override string ToString()=>
+            $"{typeof(T).Name}({string.Join("; ", properties.Select(s => $"{s.Name}: {s.GetValue(this,null)}"))})";
     }
+
 }
