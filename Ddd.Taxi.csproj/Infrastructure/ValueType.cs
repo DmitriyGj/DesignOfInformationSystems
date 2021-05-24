@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Ddd.Taxi.Domain;
 using NUnit;
 
 namespace Ddd.Infrastructure
 {
     public class ValueType<T>
     {
-
         static IEnumerable<PropertyInfo> properties;
         static ValueType() => properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                               .OrderBy(prop => prop.Name);
@@ -23,8 +21,8 @@ namespace Ddd.Infrastructure
             return properties.All(prop => Equals(prop.GetValue(this), (prop.GetValue(obj))));
         }
 
-        public bool Equals(PersonName name) => Equals((object)name);
-
+        public bool Equals(T obj) => Equals((object)obj);
+         
         public override int GetHashCode()
         {
             var res = unchecked((int)2166136261);
@@ -40,5 +38,4 @@ namespace Ddd.Infrastructure
         public override string ToString()=>
             $"{typeof(T).Name}({string.Join("; ", properties.Select(s => $"{s.Name}: {s.GetValue(this,null)}"))})";
     }
-
 }
