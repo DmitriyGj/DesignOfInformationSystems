@@ -70,7 +70,7 @@ namespace Ddd.Taxi.Domain
 
 	public class TaxiOrder : Entity<int>
 	{
-		public PersonName ClientName { get; private set; }
+	    public PersonName ClientName { get; private set; }
 		public Address Start { get; private set; }
 		public Address Destination { get; private set; }
 		public Driver Driver { get;  private set; }
@@ -141,10 +141,10 @@ namespace Ddd.Taxi.Domain
 		public PersonName Name { get; private set; }
 		public Car Car { get; private set; }
 
-		public Driver(int id, PersonName taxistPersonName, Car car) : base(id)
+		public Driver(int id, PersonName personName, Car car) : base(id)
 		{
 			Car = car;
-			Name = taxistPersonName;
+			Name = personName;
 		}
 	}
 
