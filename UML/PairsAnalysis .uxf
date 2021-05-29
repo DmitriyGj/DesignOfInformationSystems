@@ -1,0 +1,9 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>50</x><y>130</y><w>330</w><h>140</h></coordinates><panel_attributes>_Analysis_
+--
+
+
+--
+_+ FindMaxPeriodIndex(data: DataTime[]): int_
+_+ FindeAverage RelativeDifference(data" double[]): double_
+_+Pairs&lt;T&gt;(a:IEnumerable&lt;T&gt;): IEnumerable&lt;Tuple&lt;T,T&gt; &gt;_
+_+ MaxIndex&lt;T&gt;(a: IEnumerable&lt;T&gt;): int_</panel_attributes><additional_attributes></additional_attributes></element></diagram>

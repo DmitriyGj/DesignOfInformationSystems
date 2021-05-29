@@ -1,0 +1,10 @@
+D:\Учеба\прога\ulearn\пис\Generics.Robots.csproj\bin\Debug\Generics.Robots.exe.config
+D:\Учеба\прога\ulearn\пис\Generics.Robots.csproj\bin\Debug\Generics.Robots.exe
+D:\Учеба\прога\ulearn\пис\Generics.Robots.csproj\bin\Debug\Generics.Robots.pdb
+D:\Учеба\прога\ulearn\пис\Generics.Robots.csproj\bin\Debug\nunit.framework.dll
+D:\Учеба\прога\ulearn\пис\Generics.Robots.csproj\bin\Debug\nunitlite.dll
+D:\Учеба\прога\ulearn\пис\Generics.Robots.csproj\obj\Debug\Generics.Robots.csprojAssemblyReference.cache
+D:\Учеба\прога\ulearn\пис\Generics.Robots.csproj\obj\Debug\Generics.Robots.csproj.CoreCompileInputs.cache
+D:\Учеба\прога\ulearn\пис\Generics.Robots.csproj\obj\Debug\Generics.Robots.csproj.CopyComplete
+D:\Учеба\прога\ulearn\пис\Generics.Robots.csproj\obj\Debug\Generics.Robots.exe
+D:\Учеба\прога\ulearn\пис\Generics.Robots.csproj\obj\Debug\Generics.Robots.pdb

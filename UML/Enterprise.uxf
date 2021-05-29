@@ -1,0 +1,12 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>70</x><y>140</y><w>250</w><h>190</h></coordinates><panel_attributes>Enterprise
+--
+&lt;&lt;readonly&gt;&gt; + Guid: Guid
+&lt;&lt;get, set&gt;&gt; + Name: String
+&lt;&lt;get&gt;&gt; + Inn: String
+&lt;&lt;get&gt;&gt; + ActiveTimeSpan: TimeSpan
+&lt;&lt;get, set&gt;&gt; EstablishDate: DateTime
+--
++ GetTotalTrasactionsAmount(): Double
+&lt;&lt;set&gt;&gt; + Inn(value: String) : String
+
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>

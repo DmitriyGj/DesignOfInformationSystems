@@ -1,0 +1,11 @@
+D:\прога\ulearn\пис\Incapsulation.Failures.csproj\bin\Debug\ReportMaker.cs
+D:\прога\ulearn\пис\Incapsulation.Failures.csproj\bin\Debug\Incapsulation.Failures.exe.config
+D:\прога\ulearn\пис\Incapsulation.Failures.csproj\bin\Debug\Incapsulation.Failures.exe
+D:\прога\ulearn\пис\Incapsulation.Failures.csproj\bin\Debug\Incapsulation.Failures.pdb
+D:\прога\ulearn\пис\Incapsulation.Failures.csproj\bin\Debug\nunit.framework.dll
+D:\прога\ulearn\пис\Incapsulation.Failures.csproj\bin\Debug\nunitlite.dll
+D:\прога\ulearn\пис\Incapsulation.Failures.csproj\obj\Debug\Incapsulation.Failures.csprojAssemblyReference.cache
+D:\прога\ulearn\пис\Incapsulation.Failures.csproj\obj\Debug\Incapsulation.Failures.csproj.CoreCompileInputs.cache
+D:\прога\ulearn\пис\Incapsulation.Failures.csproj\obj\Debug\Incapsulation.Failures.csproj.CopyComplete
+D:\прога\ulearn\пис\Incapsulation.Failures.csproj\obj\Debug\Incapsulation.Failures.exe
+D:\прога\ulearn\пис\Incapsulation.Failures.csproj\obj\Debug\Incapsulation.Failures.pdb

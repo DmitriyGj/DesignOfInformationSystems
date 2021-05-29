@@ -1,0 +1,10 @@
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Reports.csproj\obj\Debug\Delegates.Reports.csprojAssemblyReference.cache
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Reports.csproj\obj\Debug\Delegates.Reports.csproj.CoreCompileInputs.cache
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Reports.csproj\bin\Debug\Delegates.Reports.exe.config
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Reports.csproj\bin\Debug\Delegates.Reports.exe
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Reports.csproj\bin\Debug\Delegates.Reports.pdb
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Reports.csproj\bin\Debug\nunit.framework.dll
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Reports.csproj\bin\Debug\nunitlite.dll
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Reports.csproj\obj\Debug\Delegates.Reports.csproj.CopyComplete
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Reports.csproj\obj\Debug\Delegates.Reports.exe
+D:\Учеба\прога\ulearn\пис\DesignOfInformationSystems\Delegates.Reports.csproj\obj\Debug\Delegates.Reports.pdb

@@ -1,0 +1,19 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>720</x><y>110</y><w>290</w><h>280</h></coordinates><panel_attributes>template=T
+BinaryTree
+--
+&lt;&lt;get,set&gt;&gt; +Left:BinaryTree&lt;T&gt;
+&lt;&lt;get,set&gt;&gt; +Right:BinaryTree&lt;T&gt;
+&lt;&lt;get,set&gt;&gt; +Value: T
+&lt;&lt;get,set&gt;&gt; +IsRoot: bool
+--
++ BinaryTree():BinaryTree
++ BinaryTree(value:T):BinaryTree
++GetEnumerator(): IEnumerator&lt;T&gt;
++Add(value:T) :void
+# IEnumerable.GetEnumerator():IEnumerator
+- Down(root: BinaryTree&lt;T&gt;):IEnumerator&lt;T&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLInterface</id><coordinates><x>400</x><y>100</y><w>180</w><h>90</h></coordinates><panel_attributes>IEnumerable
+--
+GetEnumerator():IEnumerator</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>480</x><y>110</y><w>260</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;240;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1090</x><y>150</y><w>280</w><h>190</h></coordinates><panel_attributes>_BinaryTree_
+--
++Create&lt;T&gt;(params T[] values):BinaryTree&lt;T&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>990</x><y>140</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element></diagram>
