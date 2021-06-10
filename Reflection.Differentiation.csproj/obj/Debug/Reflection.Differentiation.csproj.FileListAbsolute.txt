@@ -1,0 +1,10 @@
+D:\Учеба\DesignOfInformationSystems\Reflection.Differentiation.csproj\bin\Debug\Reflection.Differentiation.exe.config
+D:\Учеба\DesignOfInformationSystems\Reflection.Differentiation.csproj\bin\Debug\Reflection.Differentiation.exe
+D:\Учеба\DesignOfInformationSystems\Reflection.Differentiation.csproj\bin\Debug\Reflection.Differentiation.pdb
+D:\Учеба\DesignOfInformationSystems\Reflection.Differentiation.csproj\bin\Debug\nunit.framework.dll
+D:\Учеба\DesignOfInformationSystems\Reflection.Differentiation.csproj\bin\Debug\nunitlite.dll
+D:\Учеба\DesignOfInformationSystems\Reflection.Differentiation.csproj\obj\Debug\Reflection.Differentiation.csprojAssemblyReference.cache
+D:\Учеба\DesignOfInformationSystems\Reflection.Differentiation.csproj\obj\Debug\Reflection.Differentiation.csproj.CoreCompileInputs.cache
+D:\Учеба\DesignOfInformationSystems\Reflection.Differentiation.csproj\obj\Debug\Reflection.Differentiation.csproj.CopyComplete
+D:\Учеба\DesignOfInformationSystems\Reflection.Differentiation.csproj\obj\Debug\Reflection.Differentiation.exe
+D:\Учеба\DesignOfInformationSystems\Reflection.Differentiation.csproj\obj\Debug\Reflection.Differentiation.pdb
