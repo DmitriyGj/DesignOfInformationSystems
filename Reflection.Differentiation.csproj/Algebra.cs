@@ -1,13 +1,6 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
-using  System.Reflection;
 
 namespace Reflection.Differentiation
 {
@@ -47,16 +40,14 @@ namespace Reflection.Differentiation
             {
                 var call = (func as MethodCallExpression);
                 var body = call.Arguments.First();
-                if (call.Method.Name == "Cos")
+                switch (call.Method.Name )
                 {
-                    return Expression.Multiply(Expression.Multiply(Expression.Constant(-1.0),
-                        Expression.Call(typeof(Math).GetMethod("Sin"),body)),
-                        GetDifferentiate(body));
-                }
-
-                if (call.Method.Name == "Sin")
-                {
-                    return Expression.Multiply(Expression.Call(typeof(Math).GetMethod("Cos"),body),
+                    case "Cos":
+                        return Expression.Multiply(Expression.Multiply(Expression.Constant(-1.0),  
+                                Expression.Call(typeof(Math).GetMethod("Sin"),body)),
+                            GetDifferentiate(body));
+                    case "Sin":
+                        return Expression.Multiply(Expression.Call(typeof(Math).GetMethod("Cos"),body),
                         GetDifferentiate(body));
                 }
             }
