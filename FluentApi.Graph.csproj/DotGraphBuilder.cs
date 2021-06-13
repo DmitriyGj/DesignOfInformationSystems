@@ -1,164 +1,152 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Linq;
 
 namespace FluentApi.Graph
 {
-
-    public enum NodeShape
+    public interface IAttributessBuilder<out T>
     {
-        Box,
-        Ellipse
+        T Color(string color);
+        T FontSize(int fontSize);
+        T Label(string label);
     }
-
-    public interface IGraphBuilder
+        
+    public interface IBuilder
     {
         GraphNodeBuilder AddNode(string nodeName);
-
-        GraphEdgeBuilder AddEdge(string sourceNode, string destinationNode);
-
+        GraphEdgeBuilder AddEdge(string sourceNode,string endNode);
         string Build();
     }
 
-    public class DotGraphBuilder : IGraphBuilder
+    public class DotGraphBuilder :IBuilder
     {
         private readonly Graph graph;
-
         private DotGraphBuilder(string graphName, bool directed)
         {
             graph = new Graph(graphName, directed, false);
         }
-
+        
+        public static IBuilder DirectedGraph(string graphName)=>new DotGraphBuilder(graphName,true);
+        public static IBuilder UndirectedGraph(string graphName) => new DotGraphBuilder(graphName, false);
+        public string Build()=> graph.ToDotFormat();
         public GraphNodeBuilder AddNode(string nodeName)
         {
-            return new GraphNodeBuilder(graph.AddNode(nodeName), this);
+            graph.AddNode(nodeName);
+            return new GraphNodeBuilder(this,graph.Nodes.Last());
         }
-
-        public GraphEdgeBuilder AddEdge(string sourceNode, string destinationNode)
+        
+        public GraphEdgeBuilder AddEdge(string sourceNode, string endNode)
         {
-            var edge = graph.AddEdge(sourceNode, destinationNode);
-            return new GraphEdgeBuilder(edge, this);
-        }
-
-        public string Build() => graph.ToDotFormat();
-
-        public static IGraphBuilder DirectedGraph(string graphName)
-        {
-            return new DotGraphBuilder(graphName, directed: true);
-        }
-
-        public static IGraphBuilder NondirectedGraph(string graphName)
-        {
-            return new DotGraphBuilder(graphName, directed: false);
+            graph.AddEdge(sourceNode, endNode);
+            return new GraphEdgeBuilder(this,graph.Edges.Last());
         }
     }
-
-    public class GraphBuilder : IGraphBuilder
+    
+    public class GraphNodeBuilder: IBuilder
     {
-        protected readonly IGraphBuilder parent;
+        private readonly DotGraphBuilder parent;
+        private readonly GraphNode node;
 
-        public GraphBuilder(IGraphBuilder parent)
+        public GraphNodeBuilder( DotGraphBuilder parent, GraphNode node)
         {
             this.parent = parent;
+            this.node = node;
         }
+        
+        public GraphNodeBuilder AddNode(string nodeName) => parent.AddNode(nodeName);
+        public GraphEdgeBuilder AddEdge(string sourceNode, string endNode) => parent.AddEdge(sourceNode, endNode);
+        public string Build()=> parent.Build();
 
-        public GraphNodeBuilder AddNode(string nodeName)
+        public IBuilder With(Action<AttributessOfNodeBuilder> attributes)
         {
-            return parent.AddNode(nodeName);
+            var parameters = new AttributessOfNodeBuilder();
+            attributes(parameters);
+            foreach (var param in parameters.Attributes)
+                node.Attributes.Add(param.Key,param.Value);
+            return parent;
         }
-
-        public GraphEdgeBuilder AddEdge(string sourceNode, string destinationNode)
-        {
-            return parent.AddEdge(sourceNode, destinationNode);
-        }
-
-        public string Build() => parent.Build();
     }
 
-    public class GraphEdgeBuilder : GraphBuilder
+    public class GraphEdgeBuilder : IBuilder
     {
+        private readonly DotGraphBuilder parent;
         private readonly GraphEdge edge;
-
-        public GraphEdgeBuilder(GraphEdge edge, IGraphBuilder parent) : base(parent)
+        public GraphEdgeBuilder(DotGraphBuilder parent,GraphEdge edge)
         {
+            this.parent = parent;
             this.edge = edge;
         }
-
-        public IGraphBuilder With(Action<EdgeCommonAttributesConfig> applyAttributes)
+        
+        public GraphNodeBuilder AddNode(string nodeName) =>parent.AddNode(nodeName);
+        public GraphEdgeBuilder AddEdge(string sourceNode, string endNode) => parent.AddEdge(sourceNode,endNode);
+        public string Build() => parent.Build();
+        public IBuilder With(Action<AttributessOfEdgeBuilder> attributes)
         {
-            applyAttributes(new EdgeCommonAttributesConfig(edge));
+            var parameters = new AttributessOfEdgeBuilder();
+            attributes(parameters);
+            foreach (var val in parameters.Attributes)
+                edge.Attributes.Add(val.Key,val.Value);
             return parent;
         }
     }
 
-    public class GraphNodeBuilder : GraphBuilder
+    public enum NodeShape
     {
-        private readonly GraphNode node;
-
-        public GraphNodeBuilder(GraphNode node, IGraphBuilder parent) : base(parent)
-        {
-            this.node = node;
-        }
-
-        public IGraphBuilder With(Action<NodeCommonAttributesConfig> applyAttributes)
-        {
-            applyAttributes(new NodeCommonAttributesConfig(node));
-            return parent;
-        }
+        Box,Ellipse
     }
-
-    public class CommonAttributesConfig<TConfig>
-        where TConfig : CommonAttributesConfig<TConfig>
+    
+    public class AttributessOfNodeBuilder: IAttributessBuilder<AttributessOfNodeBuilder>
     {
-        private readonly IDictionary<string, string> attributes;
-
-        public CommonAttributesConfig(IDictionary<string, string> attributes)
+        internal readonly Dictionary<string, string> Attributes = new Dictionary<string, string>();
+        public AttributessOfNodeBuilder Color(string color)
         {
-            this.attributes = attributes;
+            Attributes["color"] = color;
+            return this;
         }
-
-        public TConfig Label(string label)
+        
+        public AttributessOfNodeBuilder FontSize(int fontSize)
         {
-            attributes["label"] = label;
-            return (TConfig)this;
+            Attributes["fontsize"] = fontSize.ToString();
+            return this;
         }
-
-        public TConfig FontSize(float sizeInPt)
+        
+        public AttributessOfNodeBuilder Shape(NodeShape shape)
         {
-            attributes["fontsize"] = sizeInPt.ToString(CultureInfo.InvariantCulture);
-            return (TConfig)this;
+            Attributes["shape"] = shape.ToString().ToLower();
+            return this;
         }
-
-        public TConfig Color(string color)
+        
+        public AttributessOfNodeBuilder Label(string label)
         {
-            attributes["color"] = color;
-            return (TConfig)this;
-        }
-    }
-
-    public class NodeCommonAttributesConfig : CommonAttributesConfig<NodeCommonAttributesConfig>
-    {
-        private readonly GraphNode node;
-
-        public NodeCommonAttributesConfig(GraphNode node) : base(node.Attributes)
-        {
-            this.node = node;
-        }
-
-        public NodeCommonAttributesConfig Shape(NodeShape shape)
-        {
-            node.Attributes["shape"] = shape.ToString().ToLowerInvariant();
+            Attributes["label"] = label;
             return this;
         }
     }
 
-    public class EdgeCommonAttributesConfig : CommonAttributesConfig<EdgeCommonAttributesConfig>
+    public class AttributessOfEdgeBuilder:IAttributessBuilder<AttributessOfEdgeBuilder>
     {
-        private readonly GraphEdge edge;
-        public EdgeCommonAttributesConfig(GraphEdge edge) : base(edge.Attributes) => this.edge = edge;
-        public EdgeCommonAttributesConfig Weight(double weight)
+        internal readonly Dictionary<string, string> Attributes = new Dictionary<string, string>();
+        public AttributessOfEdgeBuilder Color(string color)
         {
-            edge.Attributes["weight"] = weight.ToString(CultureInfo.InvariantCulture);
+            Attributes["color"] = color;
+            return this;
+        }
+        
+        public AttributessOfEdgeBuilder FontSize(int fontSize)
+        {
+            Attributes["fontsize"] = fontSize.ToString();
+            return this;
+        }
+        
+        public AttributessOfEdgeBuilder Weight(double weight)
+        {
+            Attributes["weight"] = weight.ToString();
+            return this;
+        }
+        
+        public AttributessOfEdgeBuilder Label(string label)
+        {
+            Attributes["label"] = label;
             return this;
         }
     }

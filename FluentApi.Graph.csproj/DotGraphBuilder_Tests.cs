@@ -42,7 +42,7 @@ namespace FluentApi.Graph
                 .AddNode("n2").With(c => c.Shape(NodeShape.Ellipse).FontSize(12).Label("node №2"))
                 .Build();
            AssertAreSame(@"digraph NoEdges { 
-                 //n1 [color=black; shape=box]; n2 [fontsize=12; label=""node №2""; shape=ellipse] }", dot);
+                 n1 [color=black; shape=box]; n2 [fontsize=12; label=""node №2""; shape=ellipse] }", dot);
        }
 
        [Test]
