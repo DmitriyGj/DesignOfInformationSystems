@@ -7,13 +7,9 @@ namespace Reflection.Differentiation
     public static class Algebra
     {
         public static Expression<Func<double,double>> Differentiate(Expression<Func<double,double>> func)
-        {
-            var param = func.Parameters;
-            var result = GetDifferentiate(func.Body);
-            return Expression.Lambda<Func<double,double>>(result,param);
-        }
+           =>Expression.Lambda<Func<double,double>>(GetDifferentiate(func.Body),func.Parameters);
         
-        static Expression GetDifferentiate(Expression func)
+        private static Expression GetDifferentiate(Expression func)
         {
             switch (func.NodeType)
             {
@@ -36,19 +32,21 @@ namespace Reflection.Differentiation
             }
         }
         
-        static Expression CalculateDifferentiationSin(MethodCallExpression func)=>
+        private static Expression CalculateDifferentiationSin(MethodCallExpression func)=>
                         Expression.Multiply(Expression.Call(typeof(Math).GetMethod("Cos"),func.Arguments.First()), 
                        GetDifferentiate(func.Arguments.First()));
         
-        static Expression CalculateDifferentiateCos(MethodCallExpression func)=>Expression.Multiply(
-                Expression.Multiply(Expression.Call(typeof(Math).GetMethod("Sin"),
-                                func.Arguments.First()),Expression.Constant(-1.0)),
+        private static Expression CalculateDifferentiateCos(MethodCallExpression func)=>
+            Expression.Multiply(
+                Expression.Multiply(Expression.Call(typeof(Math).GetMethod("Sin"),func.Arguments.First()),
+                    Expression.Constant(-1.0)),
                 GetDifferentiate(func.Arguments.First()));
 
-        static Expression CalculateDifferentiationAdd(BinaryExpression func) =>
+        private static Expression CalculateDifferentiationAdd(BinaryExpression func) =>
             Expression.Add(GetDifferentiate(func.Left), GetDifferentiate(func.Right));
 
-        static Expression CalculateDifferentiationMultiply(BinaryExpression func) => Expression.Add(
+        private static Expression CalculateDifferentiationMultiply(BinaryExpression func) => 
+            Expression.Add(
             Expression.Multiply(GetDifferentiate(func.Left), func.Right),
             Expression.Multiply(GetDifferentiate(func.Right), func.Left));
     }   
