@@ -12,46 +12,44 @@ namespace Reflection.Differentiation
             var result = GetDifferentiate(func.Body);
             return Expression.Lambda<Func<double,double>>(result,param);
         }
-
-        public static Expression GetDifferentiate(Expression func)
+        
+        static Expression GetDifferentiate(Expression func)
         {
-            var nodeType = func.NodeType;
-            if (nodeType is ExpressionType.Constant)
-                return Expression.Constant(0.0);
-            if (nodeType is ExpressionType.Parameter)
-                return Expression.Constant(1.0);
-            if (nodeType is ExpressionType.Add)
+            switch (func.NodeType)
             {
-                var left = GetDifferentiate((func as BinaryExpression).Left);
-                var right = GetDifferentiate((func as BinaryExpression).Right);
-                return Expression.Add(left, right);
+                case ExpressionType.Constant:return Expression.Constant(0.0);
+                case ExpressionType.Parameter:return Expression.Constant(1.0);
+                case ExpressionType.Call: return GetDifferentiate(func as MethodCallExpression);
+                case ExpressionType.Multiply:return CalculateDifferentiationMultiply(func as BinaryExpression);
+                case ExpressionType.Add :return CalculateDifferentiationAdd(func as BinaryExpression);
+                default:throw new ArgumentException(func.ToString());
             }
-
-            if (nodeType is ExpressionType.Multiply)
-            {
-                var likeBinary = func as BinaryExpression;
-                var left = GetDifferentiate(likeBinary.Left);
-                var right = GetDifferentiate(likeBinary.Right);
-                return Expression.Add(Expression.Multiply(left, likeBinary.Right),
-                    Expression.Multiply(right, likeBinary.Left));
-            }
-
-            if (nodeType is ExpressionType.Call)
-            {
-                var call = (func as MethodCallExpression);
-                var body = call.Arguments.First();
-                switch (call.Method.Name )
-                {
-                    case "Cos":
-                        return Expression.Multiply(Expression.Multiply(Expression.Constant(-1.0),  
-                                Expression.Call(typeof(Math).GetMethod("Sin"),body)),
-                            GetDifferentiate(body));
-                    case "Sin":
-                        return Expression.Multiply(Expression.Call(typeof(Math).GetMethod("Cos"),body),
-                        GetDifferentiate(body));
-                }
-            }
-            throw new ArgumentException(func.ToString());
         }
+
+        static Expression GetDifferentiate(MethodCallExpression func)
+        {
+            switch (func.Method.Name )
+            {
+                case nameof(Math.Cos): return CalculateDifferentiateCos(func);
+                case nameof(Math.Sin): return CalculateDifferentiationSin(func);
+                default: throw new ArgumentException(func.ToString());
+            }
+        }
+        
+        static Expression CalculateDifferentiationSin(MethodCallExpression func)=>
+                        Expression.Multiply(Expression.Call(typeof(Math).GetMethod("Cos"),func.Arguments.First()), 
+                       GetDifferentiate(func.Arguments.First()));
+        
+        static Expression CalculateDifferentiateCos(MethodCallExpression func)=>Expression.Multiply(
+                Expression.Multiply(Expression.Call(typeof(Math).GetMethod("Sin"),
+                                func.Arguments.First()),Expression.Constant(-1.0)),
+                GetDifferentiate(func.Arguments.First()));
+
+        static Expression CalculateDifferentiationAdd(BinaryExpression func) =>
+            Expression.Add(GetDifferentiate(func.Left), GetDifferentiate(func.Right));
+
+        static Expression CalculateDifferentiationMultiply(BinaryExpression func) => Expression.Add(
+            Expression.Multiply(GetDifferentiate(func.Left), func.Right),
+            Expression.Multiply(GetDifferentiate(func.Right), func.Left));
     }   
 }
