@@ -26,8 +26,8 @@ namespace FluentApi.Graph
             graph = new Graph(graphName, directed, false);
         }
         
-        public static IBuilder DirectedGraph(string graphName)=>new DotGraphBuilder(graphName,true);
-        public static IBuilder UndirectedGraph(string graphName) => new DotGraphBuilder(graphName, false);
+        public static DotGraphBuilder DirectedGraph(string graphName)=>new DotGraphBuilder(graphName,true);
+        public static DotGraphBuilder UndirectedGraph(string graphName) => new DotGraphBuilder(graphName, false);
         public string Build()=> graph.ToDotFormat();
         public GraphNodeBuilder AddNode(string nodeName)
         {
@@ -57,7 +57,7 @@ namespace FluentApi.Graph
         public GraphEdgeBuilder AddEdge(string sourceNode, string endNode) => parent.AddEdge(sourceNode, endNode);
         public string Build()=> parent.Build();
 
-        public IBuilder With(Action<AttributessOfNodeBuilder> attributes)
+        public DotGraphBuilder With(Action<AttributessOfNodeBuilder> attributes)
         {
             var parameters = new AttributessOfNodeBuilder();
             attributes(parameters);
@@ -80,7 +80,7 @@ namespace FluentApi.Graph
         public GraphNodeBuilder AddNode(string nodeName) =>parent.AddNode(nodeName);
         public GraphEdgeBuilder AddEdge(string sourceNode, string endNode) => parent.AddEdge(sourceNode,endNode);
         public string Build() => parent.Build();
-        public IBuilder With(Action<AttributessOfEdgeBuilder> attributes)
+        public DotGraphBuilder With(Action<AttributessOfEdgeBuilder> attributes)
         {
             var parameters = new AttributessOfEdgeBuilder();
             attributes(parameters);
