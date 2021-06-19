@@ -17,7 +17,7 @@ namespace SRP.ControlDigit
             return result;
         }
 
-        public static int CalcProgression(this List<int> digits,int factor,int coefficient, bool dash)
+        public static int CalculateProgression(this List<int> digits,int factor,int coefficient, bool dash)
         {
             int result = 0;
             foreach (var digit in digits)
@@ -27,14 +27,13 @@ namespace SRP.ControlDigit
             }
             return result;
         }
-        
     }
 
     public static class ControlDigitAlgo
     {
         public static int Upc(long number)
         {
-            int sum = number.ToDigits().CalcProgression(3,4,true);
+            int sum = number.ToDigits().CalculateProgression(3,4,true);
             int result = sum % 10;
             if (result != 0)
                 result = 10 - result;
@@ -43,11 +42,13 @@ namespace SRP.ControlDigit
 
         public static int Isbn10(long number)
         {
-            var sum = number.ToDigits().CalcProgression(2,1,false);
+            var sum = number.ToDigits().CalculateProgression(2,1,false);
             var result = sum % 11 == 0  ? sum : 10 - (sum % 11 - 1);
             return result == 10 ? 'X' : result.ToString().First();
         }
 
-        public static int Luhn(long number) => number.ToDigits().CalcProgression(1,4,true);
+        public static int Luhn(long number) => number.ToDigits()
+            .Select((num,index)=> index % 2 != 0 ? num: num*2)
+            .Select(num=> num > 9 ? num/10+num%10: num).Sum() * 9 %10;
     }
 }
