@@ -1,0 +1,86 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>632</x><y>240</y><w>390</w><h>150</h></coordinates><panel_attributes>DotGraphBuilder
+--
+&lt;&lt;readonly&gt;&gt; - graph: Graph
+--
+- DotGraphBuilder(graphName: string, directed: bool): DotGraphBuilder
+_+ DirectedGraph(graphName: string): DotGraphBuilder_
+_+ UndirectedGraph(graphName: string): DotGraphBuilder_
++ Build(): string
++ AddNode(nodeName: string): GraphNodeBuilder
++ AddEdge(sourceNode: string, endNode: string): GraphEdgeBuilder
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1092</x><y>250</y><w>470</w><h>150</h></coordinates><panel_attributes>GraphNodeBuilder
+--
+&lt;&lt;readonly&gt;&gt; - parent: DotGraphBuilder
+&lt;&lt;readonly&gt;&gt; - node: GraphNode
+--
++ GraphNodeBuilder(parent: DotGraphBuilder, node: GraphNode): GraphNodeBuilder
++ AddNode(nodeName: string): GraphNodeBuilder
++ AddEdge(sourceNode: string, endNode: string): GraphEdgeBuilder
++ Builder():string
++ With(attributes: Action&lt;AttributessOfNodeBuilder&gt;): DotGraphBuilder
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>62</x><y>250</y><w>470</w><h>150</h></coordinates><panel_attributes>GraphEdgeBuilder
+--
+&lt;&lt;readonly&gt;&gt; - parent: DotGraphBuilder
+&lt;&lt;readonly&gt;&gt; - node: GraphEdge
+--
++ GraphEdgeBuilder(parent: DotGraphBuilder, edge: GraphEdge): GraphNodeBuilder
++ AddNode(nodeName: string): GraphNodeBuilder
++ AddEdge(sourceNode: string, endNode: string): GraphEdgeBuilder
++ Builder():string
++ With(attributes: Action&lt;AttributessOfNodeBuilder&gt;): DotGraphBuilder
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1242</x><y>910</y><w>130</w><h>40</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt; 
+NodeShape
+
+
+
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>212</x><y>730</y><w>300</w><h>110</h></coordinates><panel_attributes>AttributessOfEdgeBuilder
+--
+&lt;&lt;readonly&gt;&gt; ~ Attributes: Dictionary&lt;string,string&gt; 
+--
++ Color(color: string):AttributessOfEdgeBuilder
++ FontSize(fontSize: int): AttributessOfEdgeBuilder
++ Label(label: string): AttributessOfEdgeBuilder
++ Weight(weight: double): AttributessOfEdgeBuilder
+
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1292</x><y>390</y><w>30</w><h>360</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;340;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>322</x><y>390</y><w>30</w><h>360</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;340;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>522</x><y>260</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1012</x><y>260</y><w>100</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1132</x><y>730</y><w>340</w><h>110</h></coordinates><panel_attributes>AttributessOfNodeBuilder
+--
+&lt;&lt;readonly&gt;&gt; ~ Attributes: Dictionary&lt;string,string&gt; 
+--
++ Color(color: string):AttributessOfNodeBuilder
++ FontSize(fontSize: int): AttributessOfNodeBuilder
++ Label(label: string): AttributessOfNodeBuilder
++ Shape(shape: NodeShape): AttributessOfNodeBuilder
+
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1292</x><y>830</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1012</x><y>300</y><w>100</w><h>30</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>522</x><y>300</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>642</x><y>460</y><w>370</w><h>150</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+IBuilder
+--
+
+--
+AddNode(nodeName: string): GraphNodeBuilder
+AddEdge(sourceNode: string, endNode: string): GraphEdgeBuilder
+Build(): string
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>752</x><y>720</y><w>200</w><h>110</h></coordinates><panel_attributes>template=out T
+&lt;&lt;interface&gt;&gt;
+IAttributessBuilder
+--
+Color(color: string): T
+FontSize(fontSize: int): T
+Label(label: string): T
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>833</x><y>380</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>453</x><y>390</y><w>210</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>190;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1003</x><y>390</y><w>200</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;90;180;10</additional_attributes></element><element><id>Relation</id><coordinates><x>923</x><y>740</y><w>230</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;210;10</additional_attributes></element><element><id>Relation</id><coordinates><x>503</x><y>740</y><w>270</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>250;10;10;10</additional_attributes></element></diagram>
