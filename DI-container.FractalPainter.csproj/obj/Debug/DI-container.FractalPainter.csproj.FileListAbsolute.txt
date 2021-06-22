@@ -1,0 +1,16 @@
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\bin\Debug\app.settings
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\bin\Debug\FractalPainter.exe.config
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\bin\Debug\FractalPainter.exe
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\bin\Debug\FractalPainter.pdb
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\bin\Debug\Castle.Core.dll
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\bin\Debug\FluentAssertions.Core.dll
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\bin\Debug\FluentAssertions.dll
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\bin\Debug\Ninject.dll
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\bin\Debug\Ninject.Extensions.Conventions.dll
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\bin\Debug\Ninject.Extensions.Factory.dll
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\bin\Debug\nunit.framework.dll
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\obj\Debug\DI-container.FractalPainter.csprojAssemblyReference.cache
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\obj\Debug\DI-container.FractalPainter.csproj.CoreCompileInputs.cache
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\obj\Debug\DI-container.FractalPainter.csproj.CopyComplete
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\obj\Debug\FractalPainter.exe
+D:\Учеба\DesignOfInformationSystems\DI-container.FractalPainter.csproj\obj\Debug\FractalPainter.pdb
