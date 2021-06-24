@@ -1,9 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Generics.Robots
 {
@@ -26,27 +22,22 @@ namespace Generics.Robots
     public class BuilderAI : IRobotAI<BuilderCommand>
     {
         int counter = 1;
-
         public BuilderCommand GetCommand() => BuilderCommand.ForCounter(counter++);
     }
 
     public class Mover : IDevice<IMoveCommand>
     {
         public string ExecuteCommand(IMoveCommand move_command)
-        {
-           return $"MOV {move_command.Destination.X}, " +
+        => $"MOV {move_command.Destination.X}, " +
                   $"{move_command.Destination.Y}";
-        }
     }
 
     public class ShooterMover : IDevice<IShooterMoveCommand>
     {
         public string ExecuteCommand(IShooterMoveCommand move_command)
-        { 
-            return $"MOV {move_command.Destination.X}," +
+        => $"MOV {move_command.Destination.X}," +
             $" {move_command.Destination.Y}, USE COVER " +
             $"{(move_command.ShouldHide ? "YES" : "NO")}";
-        }
     }
 
     public  class Robot<TCommand>
