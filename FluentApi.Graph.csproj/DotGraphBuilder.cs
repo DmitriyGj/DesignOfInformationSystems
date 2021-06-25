@@ -1,26 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using NUnit.Framework.Constraints;
 
 namespace FluentApi.Graph
 {
-    public interface IAttributessBuilder<out T>
+    public abstract class GraphPartBuilder
     {
-        T Color(string color);
-        T FontSize(int fontSize);
-        T Label(string label);
-    }
-        
-    public interface IBuilder
-    {
-        GraphNodeBuilder AddNode(string nodeName);
-        GraphEdgeBuilder AddEdge(string sourceNode,string endNode);
-        string Build();
+        protected DotGraphBuilder parent;
+
+        protected GraphPartBuilder(DotGraphBuilder parent)
+        {
+            this.parent = parent;
+        }
+
+        public GraphPartBuilder AddNode(string nodeName)
+          =>parent.AddNode(nodeName);
+
+        public GraphPartBuilder AddEdge(string edgeStart, string edgeEnd)
+        => parent.AddEdge(edgeStart, edgeEnd);
+
+        public String Build()=>parent.Build();
+
+        public abstract GraphPartBuilder With(Action<AttributesBuilder> applier);
     }
 
-    public class DotGraphBuilder :IBuilder
+    public class DotGraphBuilder 
     {
-        private readonly Graph graph;
+        readonly Graph graph;
         private DotGraphBuilder(string graphName, bool directed)
         {
             graph = new Graph(graphName, directed, false);
@@ -29,64 +37,47 @@ namespace FluentApi.Graph
         public static DotGraphBuilder DirectedGraph(string graphName)=>new DotGraphBuilder(graphName,true);
         public static DotGraphBuilder UndirectedGraph(string graphName) => new DotGraphBuilder(graphName, false);
         public string Build()=> graph.ToDotFormat();
-        public GraphNodeBuilder AddNode(string nodeName)
+        public GraphPartBuilder AddNode(string nodeName)
         {
             graph.AddNode(nodeName);
-            return new GraphNodeBuilder(this,graph.Nodes.Last());
+            return new NodeBuilder(this,graph.Nodes.Last());
         }
         
-        public GraphEdgeBuilder AddEdge(string sourceNode, string endNode)
+        public GraphPartBuilder AddEdge(string sourceNode, string endNode)
         {
             graph.AddEdge(sourceNode, endNode);
-            return new GraphEdgeBuilder(this,graph.Edges.Last());
+            return new EdgeBuilder(this,graph.Edges.Last());
         }
     }
     
-    public class GraphNodeBuilder: IBuilder
+    public class NodeBuilder:GraphPartBuilder
     {
-        private readonly DotGraphBuilder parent;
         private readonly GraphNode node;
 
-        public GraphNodeBuilder( DotGraphBuilder parent, GraphNode node)
+        public NodeBuilder( DotGraphBuilder parent, GraphNode node):base(parent)
         {
-            this.parent = parent;
             this.node = node;
         }
-        
-        public GraphNodeBuilder AddNode(string nodeName) => parent.AddNode(nodeName);
-        public GraphEdgeBuilder AddEdge(string sourceNode, string endNode) => parent.AddEdge(sourceNode, endNode);
-        public string Build()=> parent.Build();
 
-        public DotGraphBuilder With(Action<AttributessOfNodeBuilder> attributes)
+        public override GraphPartBuilder With(Action<AttributesBuilder> applier)
         {
-            var parameters = new AttributessOfNodeBuilder();
-            attributes(parameters);
-            foreach (var param in parameters.Attributes)
-                node.Attributes.Add(param.Key,param.Value);
-            return parent;
+            applier(new AttributesOfNodeBuilder(node));
+            return this;
         }
     }
 
-    public class GraphEdgeBuilder : IBuilder
+    public class EdgeBuilder : GraphPartBuilder
     {
-        private readonly DotGraphBuilder parent;
         private readonly GraphEdge edge;
-        public GraphEdgeBuilder(DotGraphBuilder parent,GraphEdge edge)
+        public EdgeBuilder(DotGraphBuilder parent,GraphEdge edge):base(parent)
         {
-            this.parent = parent;
             this.edge = edge;
         }
-        
-        public GraphNodeBuilder AddNode(string nodeName) =>parent.AddNode(nodeName);
-        public GraphEdgeBuilder AddEdge(string sourceNode, string endNode) => parent.AddEdge(sourceNode,endNode);
-        public string Build() => parent.Build();
-        public DotGraphBuilder With(Action<AttributessOfEdgeBuilder> attributes)
+
+        public override GraphPartBuilder With(Action<AttributesBuilder> applier)
         {
-            var parameters = new AttributessOfEdgeBuilder();
-            attributes(parameters);
-            foreach (var val in parameters.Attributes)
-                edge.Attributes.Add(val.Key,val.Value);
-            return parent;
+            applier(new AttributesOfEdgeBuilder(edge));
+            return this;
         }
     }
 
@@ -94,60 +85,67 @@ namespace FluentApi.Graph
     {
         Box,Ellipse
     }
-    
-    public class AttributessOfNodeBuilder: IAttributessBuilder<AttributessOfNodeBuilder>
+
+    public abstract class AttributesBuilder
     {
-        internal readonly Dictionary<string, string> Attributes = new Dictionary<string, string>();
-        public AttributessOfNodeBuilder Color(string color)
+        internal Dictionary<string, string> Attributes;
+        protected AttributesBuilder (Dictionary<string, string> dict)
+        {
+            Attributes = dict;
+        }
+            
+        public AttributesBuilder Color(string color)
         {
             Attributes["color"] = color;
-            return this;
+            return this; 
         }
-        
-        public AttributessOfNodeBuilder FontSize(int fontSize)
+
+        public AttributesBuilder FontSize(int fontSize)
         {
             Attributes["fontsize"] = fontSize.ToString();
             return this;
         }
-        
-        public AttributessOfNodeBuilder Shape(NodeShape shape)
+
+        public AttributesBuilder Label(string label)
+        {
+            Attributes["label"] = label;
+            return this;
+        }
+
+        public virtual AttributesOfNodeBuilder Shape(NodeShape shape)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual AttributesOfEdgeBuilder Weight(double weihgt)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
+    public class AttributesOfNodeBuilder:AttributesBuilder
+    {
+        public override AttributesOfNodeBuilder Shape(NodeShape shape)
         {
             Attributes["shape"] = shape.ToString().ToLower();
             return this;
         }
-        
-        public AttributessOfNodeBuilder Label(string label)
+
+        public AttributesOfNodeBuilder(GraphNode graphNode) : base(graphNode.Attributes)
         {
-            Attributes["label"] = label;
-            return this;
         }
     }
 
-    public class AttributessOfEdgeBuilder:IAttributessBuilder<AttributessOfEdgeBuilder>
+    public class AttributesOfEdgeBuilder: AttributesBuilder
     {
-        internal readonly Dictionary<string, string> Attributes = new Dictionary<string, string>();
-        public AttributessOfEdgeBuilder Color(string color)
+        public override AttributesOfEdgeBuilder Weight(double weight)
         {
-            Attributes["color"] = color;
+            Attributes["weight"] = weight.ToString(CultureInfo.InvariantCulture);
             return this;
         }
-        
-        public AttributessOfEdgeBuilder FontSize(int fontSize)
+
+        public AttributesOfEdgeBuilder(GraphEdge graphEdge) : base(graphEdge.Attributes)
         {
-            Attributes["fontsize"] = fontSize.ToString();
-            return this;
-        }
-        
-        public AttributessOfEdgeBuilder Weight(double weight)
-        {
-            Attributes["weight"] = weight.ToString();
-            return this;
-        }
-        
-        public AttributessOfEdgeBuilder Label(string label)
-        {
-            Attributes["label"] = label;
-            return this;
         }
     }
 }
