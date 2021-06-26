@@ -1,0 +1,14 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>420</x><y>260</y><w>230</w><h>190</h></coordinates><panel_attributes>APIObject
+--
+- disposedValue : bool
+- number: int
+--
+&lt;&lt;virutal&gt;&gt; Dispose(disposing: bool): void
+&lt;&lt;finalizator&gt;&gt; APIObject(): void
++ APIObject(n: int): APIObject
+- IDiposable.Distpose(): void
++ Dispose(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLInterface</id><coordinates><x>210</x><y>260</y><w>80</w><h>90</h></coordinates><panel_attributes>IDiposable
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>260</y><w>200</w><h>40</h></coordinates><panel_attributes>lt=-()
+</panel_attributes><additional_attributes>180;20;10;20</additional_attributes></element></diagram>

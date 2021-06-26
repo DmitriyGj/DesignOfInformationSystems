@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Memory.API
 {
+    //https://disk.yandex.ru/i/YK3dvwepDHpVrA
     public class APIObject : IDisposable
     {
         private bool disposedValue;
@@ -16,32 +17,24 @@ namespace Memory.API
             if (!disposedValue)
             {
                 if (disposing)
-                {
-                    Dispose();
-                }
-
-                // TODO: освободить неуправляемые ресурсы (неуправляемые объекты) и переопределить метод завершения
-                // TODO: установить значение NULL для больших полей
+                    MagicAPI.Free(number);
                 disposedValue = true;
             }
         }
 
-        // // TODO: переопределить метод завершения, только если "Dispose(bool disposing)" содержит код для освобождения неуправляемых ресурсов
         ~APIObject()
          {
             Dispose(true);
-        //     // Не изменяйте этот код. Разместите код очистки в методе "Dispose(bool disposing)".
-        //   
          }
 
         public APIObject(int n)
         {
             number = n;
+            MagicAPI.Allocate(number);
         }
 
         void IDisposable.Dispose()
         {
-            // Не изменяйте этот код. Разместите код очистки в методе "Dispose(bool disposing)".
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
@@ -49,7 +42,6 @@ namespace Memory.API
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }
