@@ -26,12 +26,9 @@ namespace Delegates.PairsAnalysis
             }
         }
 
-        public static int MaxIndex<T>(this IEnumerable<T> a)
-        {
-            var result = a.Select((value, index) => Tuple.Create(value, index))
+        public static int MaxIndex<T>(this IEnumerable<T> a)=>
+            a.Select((value, index) => Tuple.Create(value, index))
                          .OrderByDescending(tuple => tuple.Item1)
-                         .ToArray();
-            return result.First().Item2;
-        }
+                         .ToArray().First().Item2;
     }
 }

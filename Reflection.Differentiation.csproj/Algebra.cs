@@ -33,7 +33,8 @@ namespace Reflection.Differentiation
         }
         
         private static Expression CalculateDifferentiationSin(MethodCallExpression func)=>
-                        Expression.Multiply(Expression.Call(typeof(Math).GetMethod("Cos"),func.Arguments.First()), 
+                        Expression.Multiply(
+                            Expression.Call(typeof(Math).GetMethod("Cos"),func.Arguments.First()), 
                        GetDifferentiate(func.Arguments.First()));
         
         private static Expression CalculateDifferentiateCos(MethodCallExpression func)=>

@@ -1,0 +1,7 @@
+D:\Учеба\ProgressCheck\ProgressCheck1\ProgressCheck1\bin\Debug\ProgressCheck1.exe.config
+D:\Учеба\ProgressCheck\ProgressCheck1\ProgressCheck1\bin\Debug\ProgressCheck1.exe
+D:\Учеба\ProgressCheck\ProgressCheck1\ProgressCheck1\bin\Debug\ProgressCheck1.pdb
+D:\Учеба\ProgressCheck\ProgressCheck1\ProgressCheck1\obj\Debug\ProgressCheck1.csproj.AssemblyReference.cache
+D:\Учеба\ProgressCheck\ProgressCheck1\ProgressCheck1\obj\Debug\ProgressCheck1.csproj.CoreCompileInputs.cache
+D:\Учеба\ProgressCheck\ProgressCheck1\ProgressCheck1\obj\Debug\ProgressCheck1.exe
+D:\Учеба\ProgressCheck\ProgressCheck1\ProgressCheck1\obj\Debug\ProgressCheck1.pdb

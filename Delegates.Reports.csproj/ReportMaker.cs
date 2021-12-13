@@ -63,6 +63,7 @@ namespace Delegates.Reports
 
 		Func<string> IFormatBuilder.EndList => () => "";
 	}
+	
     public class MeanAndStdStatistics : IStatisticBuilder
     {
         public string Caption { get => "Mean and Std"; }       

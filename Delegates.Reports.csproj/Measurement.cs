@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,5 @@ namespace Delegates.Reports
     {
         public double Temperature { get; set; }
         public double Humidity { get; set; }
-
     }
 }
